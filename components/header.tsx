@@ -1,7 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const Header = () => {
+  const router = useRouter();
+
   return (
     <nav className="fixed t-0 l-0 w-full px-4 py-2.5 bg-gray-50/60 backdrop-blur-md sm:px-0 sm:py-4 dark:bg-gray-900">
       <div className="sm:w-11/12 flex flex-wrap items-center justify-between mx-auto">
@@ -16,7 +19,9 @@ const Header = () => {
             <li>
               <Link
                 href="/blogs"
-                className="text-sm text-gray-500 hover:text-gray-800 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                className={`text-sm text-gray-500 hover:text-gray-800 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent ${
+                  router.pathname === '/blogs' ? 'text-gray-900' : ''
+                }`}
               >
                 Blogs
               </Link>

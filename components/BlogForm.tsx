@@ -13,7 +13,7 @@ const BlogForm = () => {
   };
 
   return (
-    <div className="w-full text-gray-600 body-font mt-28">
+    <div className="w-full mx-auto text-gray-600 body-font ">
       <h1 className="text-2xl font-bold text-gray-900 mb-10">
         포스트 생성하기
       </h1>

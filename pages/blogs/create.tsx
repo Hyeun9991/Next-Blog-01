@@ -1,20 +1,19 @@
 import Head from 'next/head';
+import BlogForm from '../../components/BlogForm';
 import Layout from '../../components/layout';
 
-const Index = () => {
+const create = () => {
   return (
     <Layout>
       <Head>
-        <title>Eh | Blogs</title>
+        <title>Eh | Create</title>
         <meta name="description" content="Next.js로 만든 블로그" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1 className="text-2xl font-bold text-gray-900 mb-10">
-        포스트 리스트
-      </h1>
+      <BlogForm />
     </Layout>
   );
 };
 
-export default Index;
+export default create;
