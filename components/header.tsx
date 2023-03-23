@@ -15,14 +15,6 @@ const Header = () => {
           <ul className="flex gap-8 md:gap-8">
             <li>
               <Link
-                href="/"
-                className="text-sm text-gray-500 hover:text-gray-800  dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-              >
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
                 href="/blogs"
                 className="text-sm text-gray-500 hover:text-gray-800 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
               >
