@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 const Footer = () => {
@@ -5,12 +6,12 @@ const Footer = () => {
     <>
       <footer className="text-gray-600 body-font">
         <div className="bg-gray-100/80">
-          <div className="container py-6 mx-auto flex items-center sm:flex-row flex-col">
+          <div className="sm:w-11/12 py-6 mx-auto flex items-center sm:flex-row flex-col">
             <Link
               href="/"
               className="text-xl font-semibold whitespace-nowrap dark:text-white"
             >
-              Eh
+              <Image src="/logo.png" width={32} height={32} alt="logo image" />
             </Link>
             <p className="text-sm text-gray-500 sm:ml-6 sm:mt-0 mt-4">
               © 2020 Tailblocks —

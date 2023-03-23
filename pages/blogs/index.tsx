@@ -23,7 +23,8 @@ const Index = () => {
       </Head>
 
       <section className="w-11/12 md:w-7/12 mx-auto flex min-h-screen flex-col items-center text-gray-600 body-font">
-        <div className="w-full text-gray-600 body-font mt-20">
+        <div className="w-full text-gray-600 body-font mt-28">
+          <h1 className='text-2xl font-bold text-gray-900 mb-10'>포스트 생성하기</h1>
           <div className="mb-3">
             <label
               htmlFor="first_name"
@@ -60,7 +61,7 @@ const Index = () => {
           </div>
           <button
             type="button"
-            className="px-3.5 py-2 text-sm font-medium text-center text-white bg-gray-800 rounded-lg hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
+            className="mt-4 px-3.5 py-2 text-sm font-medium text-center text-white bg-gray-800 rounded-lg hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
             onClick={onSubmit}
           >
             Post
