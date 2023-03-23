@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Head from 'next/head';
 import { useState } from 'react';
 import Layout from '../../components/layout';
@@ -7,7 +8,10 @@ const Index = () => {
   const [body, setBody] = useState<string>('');
 
   const onSubmit = () => {
-    console.log(title, body);
+    axios.post('http://localhost:3001/posts', {
+      title,
+      body,
+    });
   };
 
   return (
