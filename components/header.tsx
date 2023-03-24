@@ -12,7 +12,7 @@ const Header = () => {
           href="/"
           className="text-xl font-semibold whitespace-nowrap dark:text-white"
         >
-          <Image src="/logo.png" width={32} height={32} alt="logo image" />
+          <Image src="/logo.png" priority width={32} height={32} alt="logo image" />
         </Link>
         <div>
           <ul className="flex gap-8 md:gap-8">

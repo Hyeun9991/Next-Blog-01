@@ -1,6 +1,8 @@
 import axios from 'axios';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import Card from '../../components/Card';
 import Layout from '../../components/layout';
 
 interface IPostData {
@@ -35,11 +37,8 @@ const Index = () => {
       </Head>
 
       <section>
-        <h1 className="text-2xl font-bold text-gray-900 mb-10">
-          포스트 리스트
-        </h1>
         {posts.map((post) => {
-          return <div key={post.id}>{post.title}</div>;
+          return <Card key={post.id} title={post.title} body={post.body} />;
         })}
       </section>
     </Layout>

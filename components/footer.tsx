@@ -10,7 +10,7 @@ const Footer = () => {
             href="/"
             className="text-xl font-semibold whitespace-nowrap dark:text-white"
           >
-            <Image src="/logo.png" width={32} height={32} alt="logo image" />
+            <Image src="/logo.png" priority width={32} height={32} alt="logo image" />
           </Link>
           <p className="text-sm text-gray-500 sm:ml-6 sm:mt-0 mt-4">
             © 2020 Tailblocks —
