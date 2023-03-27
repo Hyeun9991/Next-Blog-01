@@ -6,6 +6,7 @@ import { MouseEvent, useEffect, useState } from 'react';
 import Card from '../../components/Card';
 import Layout from '../../components/layout';
 import { HiTrash } from 'react-icons/hi';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 interface IPostData {
   title: string;
@@ -16,10 +17,12 @@ interface IPostData {
 const Index = () => {
   const router = useRouter();
   const [posts, setPosts] = useState<IPostData[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const getPosts = () => {
     axios.get('http://localhost:3001/posts').then((res) => {
       setPosts(res.data);
+      setLoading(false);
     });
   };
 
@@ -35,6 +38,44 @@ const Index = () => {
     getPosts();
   }, []);
 
+  /**
+   * getPosts() 함수를 통해 db에서 가져온 포스트 데이터를 화면에 출력하는 함수
+   */
+  const renderBlogList = () => {
+    // 로딩중이면 로딩스피너를 화면에 출력
+    if (loading) {
+      return <LoadingSpinner />;
+    }
+
+    // db에 포스트 데이터가 없으면 메세지 출력
+    if (posts.length === 0) {
+      return (
+        <p className="text-sm mt-10">
+          작성된 게시글이 없습니다. 새로운 글을 작성해보세요.
+        </p>
+      );
+    }
+
+    // 포스트 데이터를 화면에 출력
+    return posts.map((post) => {
+      return (
+        <Card
+          key={post.id}
+          title={post.title}
+          body={post.body}
+          onClick={() => router.push('/blogs/edit')}
+        >
+          <button
+            className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-gray-200 hover:bg-red-600 transition outline-none focus:ring-4 focus:ring-red-300"
+            onClick={(e) => deleteBlog(e, post.id)}
+          >
+            <HiTrash className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+          </button>
+        </Card>
+      );
+    });
+  };
+
   return (
     <Layout>
       <Head>
@@ -45,9 +86,7 @@ const Index = () => {
 
       <section>
         <div className="flex justify-between items-center mb-4">
-          <h1 className="font-bold text-2xl text-gray-900">
-            Eh 님, 안녕하세요.
-          </h1>
+          <h1 className="font-bold text-2xl text-gray-900">Eh</h1>
           <div>
             <Link
               href="/blogs/create"
@@ -57,23 +96,7 @@ const Index = () => {
             </Link>
           </div>
         </div>
-        {posts.map((post) => {
-          return (
-            <Card
-              key={post.id}
-              title={post.title}
-              body={post.body}
-              onClick={() => router.push('/blogs/edit')}
-            >
-              <button
-                className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-gray-200 hover:bg-red-600 transition outline-none focus:ring-4 focus:ring-red-300"
-                onClick={(e) => deleteBlog(e, post.id)}
-              >
-                <HiTrash className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-              </button>
-            </Card>
-          );
-        })}
+        {renderBlogList()}
       </section>
     </Layout>
   );
