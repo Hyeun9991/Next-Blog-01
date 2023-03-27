@@ -11,7 +11,7 @@ const Home: NextPage = () => {
         <meta name="description" content="Next.js로 만든 블로그" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="md:w-full mx-auto flex md:flex-row flex-col items-center">
+      <div className="flex flex-col items-center mx-auto md:w-full md:flex-row">
         <Hero />
       </div>
     </Layout>
