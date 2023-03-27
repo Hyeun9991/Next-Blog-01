@@ -2,7 +2,7 @@ import axios from 'axios';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 import Card from '../../components/Card';
 import Layout from '../../components/layout';
 import { HiTrash } from 'react-icons/hi';
@@ -13,10 +13,6 @@ interface IPostData {
   id: number;
 }
 
-// interface Props {
-//   posts: IPostData[];
-// }
-
 const Index = () => {
   const router = useRouter();
   const [posts, setPosts] = useState<IPostData[]>([]);
@@ -24,6 +20,14 @@ const Index = () => {
   const getPosts = () => {
     axios.get('http://localhost:3001/posts').then((res) => {
       setPosts(res.data);
+    });
+  };
+
+  const deleteBlog = (e: MouseEvent<HTMLButtonElement>, id: number) => {
+    e.stopPropagation();
+
+    axios.delete(`http://localhost:3001/posts/${id}`).then(() => {
+      setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
     });
   };
 
@@ -62,8 +66,8 @@ const Index = () => {
               onClick={() => router.push('/blogs/edit')}
             >
               <button
-                className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-gray-200 hover:bg-red-600 transition"
-                onClick={() => console.log('delete blog')}
+                className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-gray-200 hover:bg-red-600 transition outline-none focus:ring-4 focus:ring-red-300"
+                onClick={(e) => deleteBlog(e, post.id)}
               >
                 <HiTrash className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </button>
