@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Card from '../../components/Card';
 import Layout from '../../components/layout';
+import { HiTrash } from 'react-icons/hi';
 
 interface IPostData {
   title: string;
@@ -59,7 +60,14 @@ const Index = () => {
               title={post.title}
               body={post.body}
               onClick={() => router.push('/blogs/edit')}
-            />
+            >
+              <button
+                className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-gray-200 hover:bg-red-600 transition"
+                onClick={() => console.log('delete blog')}
+              >
+                <HiTrash className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+              </button>
+            </Card>
           );
         })}
       </section>
