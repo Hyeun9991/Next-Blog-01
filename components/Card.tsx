@@ -13,9 +13,9 @@ const Card = ({ title, body, children, onClick }: Props) => {
     >
       <div className="flex justify-between items-center">
         <div>
-          <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+          <h2 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
             {title}
-          </h5>
+          </h2>
           <p className="font-normal text-sm text-gray-600/80 dark:text-gray-400">
             {body}
           </p>

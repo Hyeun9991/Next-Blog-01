@@ -50,9 +50,9 @@ const Index = () => {
     // db에 포스트 데이터가 없으면 메세지 출력
     if (posts.length === 0) {
       return (
-        <p className="text-sm mt-10">
+        <h2 className="text-sm mt-10">
           작성된 게시글이 없습니다. 새로운 글을 작성해보세요.
-        </p>
+        </h2>
       );
     }
 
@@ -66,7 +66,7 @@ const Index = () => {
           onClick={() => router.push('/blogs/edit')}
         >
           <button
-            className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-gray-200 hover:bg-red-600 transition outline-none focus:ring-4 focus:ring-red-300"
+            className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-gray-200 hover:bg-gray-900 transition outline-none focus:ring-4 focus:ring-red-300"
             onClick={(e) => deleteBlog(e, post.id)}
           >
             <HiTrash className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
