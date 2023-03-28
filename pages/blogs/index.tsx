@@ -63,7 +63,7 @@ const Index = () => {
           key={post.id}
           title={post.title}
           body={post.body}
-          onClick={() => router.push('/blogs/edit')}
+          onClick={() => router.push(`/blogs/${post.id}`)}
         >
           <button
             className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-gray-200 hover:bg-gray-900 transition outline-none focus:ring-4 focus:ring-red-300"

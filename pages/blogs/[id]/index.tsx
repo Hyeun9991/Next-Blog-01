@@ -18,12 +18,13 @@ const PostDetailPage: NextPage<Props> = ({ postGetData }) => {
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    // 데이터를 받아오면 loading 완료
+    // 데이터를 받아오면 로딩 완료
     if (postGetData) {
       setLoading(false);
     }
   }, [postGetData]);
-  
+
+  // 로딩중이면 로딩스피너를 화면에 출력
   if (loading) {
     return <LoadingSpinner />;
   }
@@ -31,19 +32,9 @@ const PostDetailPage: NextPage<Props> = ({ postGetData }) => {
   return (
     <Layout>
       <h1 className="text-2xl font-bold text-gray-900">{postGetData.title}</h1>
-      <p className='text-sm'>{postGetData.body}</p>
+      <p className="text-sm">{postGetData.body}</p>
     </Layout>
   );
-};
-
-export const getStaticProps: GetStaticProps = async (context: any) => {
-  const { id } = context.params;
-  const res = await axios.get(`http://localhost:3001/posts/${id}`);
-  const data = res.data;
-
-  return {
-    props: { postGetData: data },
-  };
 };
 
 export const getStaticPaths = async () => {
@@ -59,6 +50,16 @@ export const getStaticPaths = async () => {
   return {
     paths,
     fallback: false,
+  };
+};
+
+export const getStaticProps: GetStaticProps = async (context: any) => {
+  const { id } = context.params;
+  const res = await axios.get(`http://localhost:3001/posts/${id}`);
+  const data = res.data;
+
+  return {
+    props: { postGetData: data },
   };
 };
 
