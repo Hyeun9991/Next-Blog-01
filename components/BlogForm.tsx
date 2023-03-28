@@ -12,6 +12,7 @@ const BlogForm = () => {
       .post('http://localhost:3001/posts', {
         title,
         body,
+        createdAt: Date.now(),
       })
       .then(() => {
         // db에 성공적으로 데이터를 보내면 포스트 리스트 페이지로 이동

@@ -1,29 +1,22 @@
 {
   "posts": [
     {
-      "title": "title 1",
-      "body": "body 1",
-      "id": 1
+      "title": "new title 01 with new date",
+      "body": "첫 번째줄의 본문 내용입니다.\n\u001d두 번째줄의 본문 내용입니다.\n세 번째줄의 본문 내용입니다.",
+      "createdAt": 1679990318775,
+      "id": 6
     },
     {
-      "title": "title 2",
-      "body": "body 2",
-      "id": 2
+      "title": "안녕하세요",
+      "body": "두 번째 포스트를 작성하게 되었습니다.",
+      "createdAt": 1679990929309,
+      "id": 7
     },
     {
-      "title": "title 3",
-      "body": "body 3",
-      "id": 3
-    },
-    {
-      "title": "title 4",
-      "body": "body 4",
-      "id": 4
-    },
-    {
-      "title": "title 5",
-      "body": "body 5",
-      "id": 5
+      "title": "테스트 게시글입니다.",
+      "body": "첫 번째 줄\n\n세 번째 줄\n\n다섯 번째 줄",
+      "createdAt": 1679991051872,
+      "id": 8
     }
   ]
 }

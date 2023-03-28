@@ -8,6 +8,7 @@ interface IPostData {
   title: string;
   body: string;
   id: number;
+  createdAt: number;
 }
 
 interface Props {
@@ -24,6 +25,10 @@ const PostDetailPage: NextPage<Props> = ({ postGetData }) => {
     }
   }, [postGetData]);
 
+  const printDate = (timestamp: number) => {
+    return new Date(timestamp).toLocaleString();
+  };
+
   // 로딩중이면 로딩스피너를 화면에 출력
   if (loading) {
     return <LoadingSpinner />;
@@ -31,8 +36,17 @@ const PostDetailPage: NextPage<Props> = ({ postGetData }) => {
 
   return (
     <Layout>
-      <h1 className="text-2xl font-bold text-gray-900">{postGetData.title}</h1>
-      <p className="text-sm">{postGetData.body}</p>
+      <h1 className="text-3xl font-bold text-gray-900 mb-2">
+        {postGetData.title}
+      </h1>
+      <p className="text-sm text-gray-500 mb-8">
+        {printDate(postGetData.createdAt)}
+      </p>
+      <pre
+        className="text-gray-900 text-md outline-none	 focus:ring-gray-500 focus:border-gray-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
+      >
+        {postGetData.body}
+      </pre>
     </Layout>
   );
 };
