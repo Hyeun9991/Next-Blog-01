@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import { RiSendPlaneFill } from 'react-icons/ri';
 
 const BlogForm = () => {
   const router = useRouter();
@@ -26,10 +27,10 @@ const BlogForm = () => {
         <h1 className="font-bold text-2xl text-gray-900">포스트 생성하기</h1>
         <div>
           <button
-            className="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-full text-sm px-3.5 py-1.5 text-center dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800"
+            className="w-7 h-7 sm:w-8 sm:h-8 bg-black flex items-center justify-center rounded-full transition outline-none focus:ring-4 focus:ring-gray-300"
             onClick={onSubmit}
           >
-            Post
+            <RiSendPlaneFill className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
           </button>
         </div>
       </div>
@@ -40,7 +41,7 @@ const BlogForm = () => {
         ></label>
         <input
           type="text"
-          className="border-gray-300 text-gray-900 text-4xl outline-none focus:border-gray-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
+          className="bg-gray-50 text-gray-900 text-4xl outline-none focus:border-gray-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
           value={title}
           placeholder="제목을 입력하세요"
           onChange={(event) => {
@@ -54,7 +55,7 @@ const BlogForm = () => {
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         ></label>
         <textarea
-          className="text-gray-900 text-md outline-none	 focus:ring-gray-500 focus:border-gray-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
+          className="bg-gray-50 text-gray-900 text-md outline-none	 focus:ring-gray-500 focus:border-gray-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
           rows={18}
           value={body}
           placeholder="당신의 이야기를 적어보세요"

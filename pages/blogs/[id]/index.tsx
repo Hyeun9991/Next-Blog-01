@@ -43,7 +43,7 @@ const PostDetailPage: NextPage<Props> = ({ postGetData }) => {
         {printDate(postGetData.createdAt)}
       </p>
       <pre
-        className="text-gray-900 text-md outline-none	 focus:ring-gray-500 focus:border-gray-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
+        className="font-notoSans text-gray-900 text-md outline-none focus:ring-gray-500 focus:border-gray-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
       >
         {postGetData.body}
       </pre>

@@ -3,9 +3,9 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { MouseEvent, useEffect, useState } from 'react';
+import { HiTrash, HiPlusSm } from 'react-icons/hi';
 import Card from '../../components/Card';
 import Layout from '../../components/layout';
-import { HiTrash } from 'react-icons/hi';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
 interface IPostData {
@@ -66,7 +66,7 @@ const Index = () => {
           onClick={() => router.push(`/blogs/${post.id}`)}
         >
           <button
-            className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-gray-200 hover:bg-gray-900 transition outline-none focus:ring-4 focus:ring-red-300"
+            className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-gray-200 hover:bg-gray-900 transition outline-none focus:ring-4 focus:ring-gray-300"
             onClick={(e) => deleteBlog(e, post.id)}
           >
             <HiTrash className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
@@ -90,9 +90,9 @@ const Index = () => {
           <div>
             <Link
               href="/blogs/create"
-              className="text-gray-900 hover:text-white border border-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-full text-sm px-3.5 py-2 text-center dark:border-gray-600 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-800"
+              className="w-7 h-7 sm:w-8 sm:h-8 bg-black flex items-center justify-center rounded-full transition outline-none focus:ring-4 focus:ring-gray-300"
             >
-              Write
+              <HiPlusSm className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
             </Link>
           </div>
         </div>
