@@ -20,10 +20,10 @@ const Header = () => {
               <Link
                 href="/blogs"
                 className={`text-sm text-gray-500 hover:text-gray-800 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent ${
-                  router.pathname === '/blogs' ? 'text-gray-900' : ''
+                  router.pathname === '/blogs' ? 'text-gray-900 font-bold' : ''
                 }`}
               >
-                Blogs
+                BLOG
               </Link>
             </li>
           </ul>

@@ -3,7 +3,7 @@ import Animation from './animation';
 
 const Hero = () => {
   return (
-    <div className='w-full flex items-center mt-16'>
+    <div className='w-full flex flex-col md:flex-row items-center mt-16'>
       <div className="flex flex-col items-center text-center lg:flex-grow lg:pr-24 md:w-full md:items-start md:text-left mb-16 md:mb-0">
         <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
           Hello <br />

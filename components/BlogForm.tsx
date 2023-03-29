@@ -11,21 +11,9 @@ interface Props {
 const BlogForm = ({ editing }: Props) => {
   const router = useRouter();
   const id = router.query.id;
+
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
-
-  const onSubmit = () => {
-    axios
-      .post('http://localhost:3001/posts', {
-        title,
-        body,
-        createdAt: Date.now(),
-      })
-      .then(() => {
-        // db에 성공적으로 데이터를 보내면 포스트 리스트 페이지로 이동
-        router.push('/blogs');
-      });
-  };
 
   useEffect(() => {
     /**
@@ -33,7 +21,7 @@ const BlogForm = ({ editing }: Props) => {
      * 문제: id값을 가져오지 못해서 404 에러 발생
      * 원인: 수정페이지에서 새로고침시 query값이 없어져 id가 undefined가 된다.
      *
-     * 해결방안 1: 서버사이드에서 쿼리값을 넘겨주면 새로고침을 해도 값이 증발하지 않는다.
+     * 해결방안: 서버사이드에서 쿼리값을 넘겨주면 새로고침을 해도 값이 증발하지 않는다.
      * 하지만 pages 폴더가 아닌 components 폴더 컴포넌트인 경우 서버사이드 기능을 사용하지 못 한다.
      */
     if (editing) {
@@ -43,6 +31,33 @@ const BlogForm = ({ editing }: Props) => {
       });
     }
   }, [editing, id]);
+
+  /**
+   * db에 editing이 true면 patch 메소드를 보내고, false면 post 메소드를 보내는 함수
+   */
+  const onSubmit = () => {
+    if (editing) {
+      axios
+        .patch(`http://localhost:3001/posts/${id}`, {
+          title,
+          body,
+        })
+        .then((res) => {
+          console.log(res);
+        });
+    } else {
+      axios
+        .post('http://localhost:3001/posts', {
+          title,
+          body,
+          createdAt: Date.now(),
+        })
+        .then(() => {
+          // db에 성공적으로 데이터를 보내면 포스트 리스트 페이지로 이동
+          router.push('/blogs');
+        });
+    }
+  };
 
   return (
     <div className="w-full mx-auto text-gray-600 body-font">
