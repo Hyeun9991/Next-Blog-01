@@ -3,6 +3,9 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Layout from '../../../components/layout';
 import LoadingSpinner from '../../../components/LoadingSpinner';
+import Link from 'next/link';
+import { AiFillEdit } from 'react-icons/ai';
+import Head from 'next/head';
 
 interface IPostData {
   title: string;
@@ -36,15 +39,25 @@ const PostDetailPage: NextPage<Props> = ({ postGetData }) => {
 
   return (
     <Layout>
-      <h1 className="text-3xl font-bold text-gray-900 mb-2">
-        {postGetData.title}
-      </h1>
+      <Head>
+        <title>Eh | {postGetData.title}</title>
+      </Head>
+
+      <div className="flex items-center mb-2">
+        <h1 className="text-3xl font-bold text-gray-900 flex-grow ">
+          {postGetData.title}
+        </h1>
+        <Link
+          href={`/blogs/${postGetData.id}/edit`}
+          className="w-7 h-7 sm:w-8 sm:h-8 bg-black flex items-center justify-center rounded-full transition outline-none focus:ring-4 focus:ring-gray-300"
+        >
+          <AiFillEdit className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+        </Link>
+      </div>
       <p className="text-sm text-gray-500 mb-8">
         {printDate(postGetData.createdAt)}
       </p>
-      <pre
-        className="font-notoSans text-gray-900 text-md outline-none focus:ring-gray-500 focus:border-gray-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
-      >
+      <pre className="font-notoSans text-gray-900 text-md outline-none focus:ring-gray-500 focus:border-gray-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500">
         {postGetData.body}
       </pre>
     </Layout>

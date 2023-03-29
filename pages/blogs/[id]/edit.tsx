@@ -1,5 +1,6 @@
 import Head from 'next/head';
-import Layout from '../../components/layout';
+import BlogForm from '../../../components/BlogForm';
+import Layout from '../../../components/layout';
 
 const edit = () => {
   return (
@@ -10,9 +11,7 @@ const edit = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <h1 className="text-2xl font-bold text-gray-900 mb-10">
-        포스트 수정하기
-      </h1>
+      <BlogForm editing={true}/>
     </Layout>
   );
 };
