@@ -2,7 +2,8 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { RiSendPlaneFill } from 'react-icons/ri';
-import { AiFillEdit } from 'react-icons/ai';
+import { BsCheckLg } from 'react-icons/bs';
+import { IoIosArrowBack } from 'react-icons/io';
 
 interface Props {
   editing: boolean;
@@ -14,6 +15,8 @@ const BlogForm = ({ editing }: Props) => {
 
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
+  const [originalTitle, setOriginalTitle] = useState<string>('');
+  const [originalBody, setOriginalBody] = useState<string>('');
 
   useEffect(() => {
     /**
@@ -24,13 +27,30 @@ const BlogForm = ({ editing }: Props) => {
      * 해결방안: 서버사이드에서 쿼리값을 넘겨주면 새로고침을 해도 값이 증발하지 않는다.
      * 하지만 pages 폴더가 아닌 components 폴더 컴포넌트인 경우 서버사이드 기능을 사용하지 못 한다.
      */
-    if (editing) {
-      axios.get(`http://localhost:3001/posts/${id}`).then((res) => {
-        setTitle(res.data.title);
-        setBody(res.data.body);
-      });
-    }
+    if (!editing) return;
+
+    axios.get(`http://localhost:3001/posts/${id}`).then((res) => {
+      setTitle(res.data.title);
+      setBody(res.data.body);
+      setOriginalTitle(res.data.title);
+      setOriginalBody(res.data.title);
+    });
   }, [editing, id]);
+
+  /**
+   * title과 body state가 수정이 되었는지 체크하는 함수
+   */
+  const isEdited = () => {
+    return title !== originalTitle || body !== originalBody;
+  };
+
+  const goBack = () => {
+    if (editing) {
+      router.push(`/blogs/${id}`);
+    } else {
+      router.push('/blogs');
+    }
+  };
 
   /**
    * db에 editing이 true면 patch 메소드를 보내고, false면 post 메소드를 보내는 함수
@@ -42,8 +62,8 @@ const BlogForm = ({ editing }: Props) => {
           title,
           body,
         })
-        .then((res) => {
-          console.log(res);
+        .then(() => {
+          router.push(`/blogs/${id}`);
         });
     } else {
       axios
@@ -62,21 +82,26 @@ const BlogForm = ({ editing }: Props) => {
   return (
     <div className="w-full mx-auto text-gray-600 body-font">
       <div className="flex justify-between items-center mb-12">
-        <h1 className="font-bold text-2xl text-gray-900">
-          포스트 {editing ? '수정하기' : '생성하기'}
-        </h1>
-        <div>
-          <button
-            className="w-7 h-7 sm:w-8 sm:h-8 bg-black flex items-center justify-center rounded-full transition outline-none focus:ring-4 focus:ring-gray-300"
-            onClick={onSubmit}
-          >
-            {editing ? (
-              <AiFillEdit className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-            ) : (
-              <RiSendPlaneFill className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-            )}
-          </button>
-        </div>
+        <button
+          className="disabled:pointer-events-none w-7 h-7 sm:w-8 sm:h-8 bg-gray-200 hover:bg-black flex items-center justify-center rounded-full transition outline-none focus:ring-4 focus:ring-gray-300"
+          onClick={goBack}
+        >
+          <IoIosArrowBack className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+        </button>
+        <button
+          className="disabled:pointer-events-none w-7 h-7 sm:w-8 sm:h-8 bg-gray-200 hover:bg-black flex items-center justify-center rounded-full transition outline-none focus:ring-4 focus:ring-gray-300"
+          onClick={onSubmit}
+          disabled={editing && !isEdited()}
+        >
+          {editing ? (
+            <BsCheckLg
+              className="
+                w-3.5 h-3.5 sm:w-5 sm:h-5 text-white"
+            />
+          ) : (
+            <RiSendPlaneFill className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+          )}
+        </button>
       </div>
       <div className="mb-8">
         <label

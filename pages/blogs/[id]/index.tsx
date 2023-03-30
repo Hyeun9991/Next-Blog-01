@@ -49,7 +49,7 @@ const PostDetailPage: NextPage<Props> = ({ postGetData }) => {
         </h1>
         <Link
           href={`/blogs/${postGetData.id}/edit`}
-          className="w-7 h-7 sm:w-8 sm:h-8 bg-black flex items-center justify-center rounded-full transition outline-none focus:ring-4 focus:ring-gray-300"
+          className="w-7 h-7 sm:w-8 sm:h-8 bg-gray-200 hover:bg-black flex items-center justify-center rounded-full transition outline-none focus:ring-4 focus:ring-gray-300"
         >
           <AiFillEdit className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
         </Link>
