@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { RiSendPlaneFill } from 'react-icons/ri';
 import { BsCheckLg } from 'react-icons/bs';
 import { IoIosArrowBack } from 'react-icons/io';
@@ -17,6 +17,8 @@ const BlogForm = ({ editing }: Props) => {
   const [body, setBody] = useState<string>('');
   const [originalTitle, setOriginalTitle] = useState<string>('');
   const [originalBody, setOriginalBody] = useState<string>('');
+  const [publish, setPublish] = useState<boolean>(false);
+  const [originalPublish, setOriginalPublish] = useState<boolean>(false);
 
   useEffect(() => {
     /**
@@ -33,7 +35,9 @@ const BlogForm = ({ editing }: Props) => {
       setTitle(res.data.title);
       setBody(res.data.body);
       setOriginalTitle(res.data.title);
-      setOriginalBody(res.data.title);
+      setOriginalBody(res.data.body);
+      setPublish(res.data.publish);
+      setOriginalPublish(res.data.publish);
     });
   }, [editing, id]);
 
@@ -41,9 +45,16 @@ const BlogForm = ({ editing }: Props) => {
    * title과 body state가 수정이 되었는지 체크하는 함수
    */
   const isEdited = () => {
-    return title !== originalTitle || body !== originalBody;
+    return (
+      title !== originalTitle ||
+      body !== originalBody ||
+      publish !== originalPublish
+    );
   };
 
+  /**
+   * 이전 페이지로 이동하는 함수
+   */
   const goBack = () => {
     if (editing) {
       router.push(`/blogs/${id}`);
@@ -61,6 +72,7 @@ const BlogForm = ({ editing }: Props) => {
         .patch(`http://localhost:3001/posts/${id}`, {
           title,
           body,
+          publish,
         })
         .then(() => {
           router.push(`/blogs/${id}`);
@@ -70,6 +82,7 @@ const BlogForm = ({ editing }: Props) => {
         .post('http://localhost:3001/posts', {
           title,
           body,
+          publish,
           createdAt: Date.now(),
         })
         .then(() => {
@@ -77,6 +90,10 @@ const BlogForm = ({ editing }: Props) => {
           router.push('/blogs');
         });
     }
+  };
+
+  const onChangePublish = (e: ChangeEvent<HTMLInputElement>) => {
+    setPublish(e.target.checked);
   };
 
   return (
@@ -88,20 +105,37 @@ const BlogForm = ({ editing }: Props) => {
         >
           <IoIosArrowBack className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
         </button>
-        <button
-          className="disabled:pointer-events-none w-7 h-7 sm:w-8 sm:h-8 bg-gray-200 hover:bg-black flex items-center justify-center rounded-full transition outline-none focus:ring-4 focus:ring-gray-300"
-          onClick={onSubmit}
-          disabled={editing && !isEdited()}
-        >
-          {editing ? (
-            <BsCheckLg
-              className="
-                w-3.5 h-3.5 sm:w-5 sm:h-5 text-white"
+        <div className="flex gap-5">
+          <div className="flex items-center">
+            <input
+              id="public-checkbox"
+              type="checkbox"
+              checked={publish}
+              onChange={onChangePublish}
+              className="cursor-pointer w-4 h-4 text-blue-600 bg-blue-100 border-blue-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-blue-800 focus:ring-2 dark:bg-blue-700 dark:border-blue-600"
             />
-          ) : (
-            <RiSendPlaneFill className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
-          )}
-        </button>
+            <label
+              htmlFor="public-checkbox"
+              className="cursor-pointer ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+            >
+              Public
+            </label>
+          </div>
+          <button
+            className="disabled:pointer-events-none w-7 h-7 sm:w-8 sm:h-8 bg-gray-200 hover:bg-black flex items-center justify-center rounded-full transition outline-none focus:ring-4 focus:ring-gray-300"
+            onClick={onSubmit}
+            disabled={editing && !isEdited()}
+          >
+            {editing ? (
+              <BsCheckLg
+                className="
+                  w-3.5 h-3.5 sm:w-5 sm:h-5 text-white"
+              />
+            ) : (
+              <RiSendPlaneFill className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+            )}
+          </button>
+        </div>
       </div>
       <div className="mb-8">
         <label
