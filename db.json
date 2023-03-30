@@ -4,14 +4,15 @@
       "title": "안녕하세요!!",
       "body": "첫 번째 포스트를 작성하게 되었습니다.",
       "createdAt": 1679990929309,
-      "id": 7
+      "id": 7,
+      "publish": true
     },
     {
       "title": "테스트 게시글입니다.",
       "body": "첫 번째 줄\n두 번째 줄\n세 번째 줄\n\n다섯 번째 줄",
       "createdAt": 1679991051872,
       "id": 8,
-      "publish": true
+      "publish": false
     },
     {
       "title": "버튼 비활성화 테스트하는 포스트",
