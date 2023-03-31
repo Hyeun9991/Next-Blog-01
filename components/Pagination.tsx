@@ -1,9 +1,16 @@
+type GetPostsFunction = (
+  page?: number,
+  startPage?: number,
+  limit?: number
+) => void;
+
 interface Props {
   currentPage: number;
   numberOfPages: number;
+  onClick: GetPostsFunction;
 }
 
-const Pagination = ({ currentPage, numberOfPages }: Props) => {
+const Pagination = ({ currentPage, numberOfPages, onClick }: Props) => {
   return (
     <nav aria-label="Page navigation example" className="mt-14 my-14">
       <ul className="inline-flex items-center -space-x-px gap-2">
@@ -34,16 +41,18 @@ const Pagination = ({ currentPage, numberOfPages }: Props) => {
           .map((pageNumber) => {
             return (
               <li key={pageNumber}>
-                <a
-                  href="#"
-                  className={`flex items-center justify-center rounded-full w-8 h-8 text-sm text-black hover:bg-gray-100 hover:text-gray-700 active:bg-black dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
-                    currentPage === 1
+                <div
+                  className={`flex items-center justify-center rounded-full w-8 h-8 cursor-pointer text-sm text-black hover:bg-gray-100 hover:text-gray-700 active:bg-black dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
+                    currentPage === pageNumber
                       ? 'bg-black text-white pointer-events-none'
                       : ''
                   }`}
+                  onClick={() => {
+                    onClick(pageNumber);
+                  }}
                 >
                   {pageNumber}
-                </a>
+                </div>
               </li>
             );
           })}

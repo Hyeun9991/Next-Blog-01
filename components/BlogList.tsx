@@ -29,12 +29,14 @@ const BlogList = ({ isAdmin }: Props) => {
   const router = useRouter();
   const [posts, setPosts] = useState<IPostData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   /**
    * db에 get 요청을 보내서 posts data를 가져오는 함수
-   * @param page number
    */
   const getPosts = (page: number = 1) => {
+    setCurrentPage(page);
+
     let params: IParams = {
       _page: page,
       _limit: 5,
@@ -116,7 +118,11 @@ const BlogList = ({ isAdmin }: Props) => {
   return (
     <div className="flex flex-col items-center">
       {renderBlogList()}
-      <Pagination currentPage={3} numberOfPages={5} />
+      <Pagination
+        currentPage={currentPage}
+        numberOfPages={3}
+        onClick={getPosts}
+      />
     </div>
   );
 };
