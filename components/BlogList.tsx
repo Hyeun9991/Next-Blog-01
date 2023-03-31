@@ -116,7 +116,7 @@ const BlogList = ({ isAdmin }: Props) => {
   return (
     <div className="flex flex-col items-center">
       {renderBlogList()}
-      <Pagination />
+      <Pagination currentPage={3} numberOfPages={5} />
     </div>
   );
 };

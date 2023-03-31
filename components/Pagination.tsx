@@ -1,4 +1,9 @@
-const Pagination = () => {
+interface Props {
+  currentPage: number;
+  numberOfPages: number;
+}
+
+const Pagination = ({ currentPage, numberOfPages }: Props) => {
   return (
     <nav aria-label="Page navigation example" className="mt-14 my-14">
       <ul className="inline-flex items-center -space-x-px gap-2">
@@ -23,47 +28,25 @@ const Pagination = () => {
             </svg>
           </a>
         </li>
-        <li>
-          <a
-            href="#"
-            className="flex items-center justify-center rounded-full w-8 h-8 text-sm text-black hover:bg-gray-100 hover:text-gray-700 active:bg-black active:text-white dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-          >
-            1
-          </a>
-        </li>
-        <li>
-          <a
-            href="#"
-            className="flex items-center justify-center rounded-full w-8 h-8 text-sm text-black hover:bg-gray-100 hover:text-gray-700 active:bg-black active:text-white dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-          >
-            2
-          </a>
-        </li>
-        <li>
-          <a
-            href="#"
-            aria-current="page"
-            className="flex items-center justify-center rounded-full w-8 h-8 text-sm text-black hover:bg-gray-100 hover:text-gray-700 active:bg-black active:text-white dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-          >
-            3
-          </a>
-        </li>
-        <li>
-          <a
-            href="#"
-            className="flex items-center justify-center rounded-full w-8 h-8 text-sm text-black hover:bg-gray-100 hover:text-gray-700 active:bg-black active:text-white dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-          >
-            4
-          </a>
-        </li>
-        <li>
-          <a
-            href="#"
-            className="flex items-center justify-center rounded-full w-8 h-8 text-sm text-black hover:bg-gray-100 hover:text-gray-700 active:bg-black active:text-white dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-          >
-            5
-          </a>
-        </li>
+        {Array(numberOfPages)
+          .fill(1)
+          .map((value, index) => value + index)
+          .map((pageNumber) => {
+            return (
+              <li key={pageNumber}>
+                <a
+                  href="#"
+                  className={`flex items-center justify-center rounded-full w-8 h-8 text-sm text-black hover:bg-gray-100 hover:text-gray-700 active:bg-black dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
+                    currentPage === 1
+                      ? 'bg-black text-white pointer-events-none'
+                      : ''
+                  }`}
+                >
+                  {pageNumber}
+                </a>
+              </li>
+            );
+          })}
         <li>
           <a
             href="#"
@@ -88,6 +71,10 @@ const Pagination = () => {
       </ul>
     </nav>
   );
+};
+
+Pagination.defaultProps = {
+  currentPage: 1,
 };
 
 export default Pagination;
