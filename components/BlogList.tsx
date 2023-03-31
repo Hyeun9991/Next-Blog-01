@@ -6,6 +6,14 @@ import Card from '../components/Card';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Pagination from './Pagination';
 
+interface IParams {
+  _page: number;
+  _limit: number;
+  _sort: string;
+  _order: string;
+  publish?: boolean;
+}
+
 interface IPostData {
   title: string;
   body: string;
@@ -19,21 +27,40 @@ interface Props {
 
 const BlogList = ({ isAdmin }: Props) => {
   const router = useRouter();
-
   const [posts, setPosts] = useState<IPostData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
+  /**
+   * db에 get 요청을 보내서 posts data를 가져오는 함수
+   * @param page number
+   */
   const getPosts = (page: number = 1) => {
+    let params: IParams = {
+      _page: page,
+      _limit: 5,
+      _sort: 'id',
+      _order: 'desc',
+    };
+
+    // admin이 아니면 공개된 포스트만 요청
+    if (!isAdmin) {
+      params = { ...params, publish: true };
+    }
+
+    // params 객체에 맞는 데이터 요청
     axios
-      .get(
-        `http://localhost:3001/posts?_page=${page}&_limit=5&_sort=id&_order=desc`
-      )
+      .get(`http://localhost:3001/posts`, {
+        params,
+      })
       .then((res) => {
-        setPosts(res.data);
-        setLoading(false);
+        setPosts(res.data); // posts state에 요청받은 데이터 담기
+        setLoading(false); // 로딩 종료
       });
   };
 
+  /**
+   * db에 delete 요청을 보내서 id가 일치하지 않는 데이터만 return 하는 함수
+   */
   const deleteBlog = (e: MouseEvent<HTMLButtonElement>, id: number) => {
     e.stopPropagation();
 
@@ -60,34 +87,32 @@ const BlogList = ({ isAdmin }: Props) => {
     );
   }
 
+  /**
+   * 요청받은 posts data를 화면에 출력하는 함수
+   */
   const renderBlogList = () => {
-    return posts
-      .filter((post) => {
-        return isAdmin || post.publish;
-      })
-      .map((post) => {
-        return (
-          <Card
-            key={post.id}
-            title={post.title}
-            body={post.body}
-            onClick={() => router.push(`/blogs/${post.id}`)}
-          >
-            {isAdmin ? (
-              <button
-                className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-gray-200 hover:bg-gray-900 transition outline-none focus:ring-4 focus:ring-gray-300"
-                onClick={(e) => deleteBlog(e, post.id)}
-              >
-                <HiTrash className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-              </button>
-            ) : undefined}
-          </Card>
-        );
-      });
+    return posts.map((post) => {
+      return (
+        <Card
+          key={post.id}
+          title={post.title}
+          body={post.body}
+          onClick={() => router.push(`/blogs/${post.id}`)}
+        >
+          {isAdmin ? (
+            <button
+              className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-gray-200 hover:bg-gray-900 transition outline-none focus:ring-4 focus:ring-gray-300"
+              onClick={(e) => deleteBlog(e, post.id)}
+            >
+              <HiTrash className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+            </button>
+          ) : undefined}
+        </Card>
+      );
+    });
   };
 
   // 포스트 데이터를 화면에 출력
-  // filter: true를 return하면 그대로 남아있고, false를 return하면 사라진다.
   return (
     <div className="flex flex-col items-center">
       {renderBlogList()}
