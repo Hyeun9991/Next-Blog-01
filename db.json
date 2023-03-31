@@ -26,6 +26,20 @@
       "publish": true,
       "createdAt": 1680145131779,
       "id": 10
+    },
+    {
+      "title": "블로그 생성후 admin 페이지로 이동 테스트",
+      "body": "중입니다!",
+      "publish": true,
+      "createdAt": 1680231170495,
+      "id": 11
+    },
+    {
+      "title": "admin 경로 테스트",
+      "body": "중입니다",
+      "publish": true,
+      "createdAt": 1680231207118,
+      "id": 12
     }
   ]
 }
