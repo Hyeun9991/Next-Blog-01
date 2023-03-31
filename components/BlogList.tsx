@@ -12,8 +12,13 @@ interface IPostData {
   publish: boolean;
 }
 
-const BlogList = () => {
+interface Props {
+  isAdmin: boolean;
+}
+
+const BlogList = ({ isAdmin }: Props) => {
   const router = useRouter();
+
   const [posts, setPosts] = useState<IPostData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -56,7 +61,7 @@ const BlogList = () => {
     <>
       {posts
         .filter((post) => {
-          return post.publish;
+          return isAdmin || post.publish;
         })
         .map((post) => {
           return (
@@ -66,17 +71,23 @@ const BlogList = () => {
               body={post.body}
               onClick={() => router.push(`/blogs/${post.id}`)}
             >
-              <button
-                className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-gray-200 hover:bg-gray-900 transition outline-none focus:ring-4 focus:ring-gray-300"
-                onClick={(e) => deleteBlog(e, post.id)}
-              >
-                <HiTrash className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-              </button>
+              {isAdmin ? (
+                <button
+                  className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-gray-200 hover:bg-gray-900 transition outline-none focus:ring-4 focus:ring-gray-300"
+                  onClick={(e) => deleteBlog(e, post.id)}
+                >
+                  <HiTrash className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                </button>
+              ) : undefined}
             </Card>
           );
         })}
     </>
   );
+};
+
+BlogList.defaultProps = {
+  isAdmin: false,
 };
 
 export default BlogList;

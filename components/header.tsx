@@ -12,7 +12,13 @@ const Header = () => {
           href="/"
           className="text-xl font-semibold whitespace-nowrap dark:text-white"
         >
-          <Image src="/logo.png" priority width={32} height={32} alt="logo image" />
+          <Image
+            src="/logo.png"
+            priority
+            width={32}
+            height={32}
+            alt="logo image"
+          />
         </Link>
         <div>
           <ul className="flex gap-8 md:gap-8">
@@ -23,7 +29,17 @@ const Header = () => {
                   router.pathname === '/blogs' ? 'text-gray-900 font-bold' : ''
                 }`}
               >
-                BLOG
+                Blogs
+              </Link>
+            </li> 
+            <li>
+              <Link
+                href="/admin"
+                className={`text-sm text-gray-500 hover:text-gray-800 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent ${
+                  router.pathname === '/admin' ? 'text-gray-900 font-bold' : ''
+                }`}
+              >
+                Admin
               </Link>
             </li>
           </ul>

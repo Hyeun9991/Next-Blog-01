@@ -23,7 +23,7 @@ const Admin = () => {
             </Link>
           </div>
         </div>
-        <BlogList />
+        <BlogList isAdmin={true} />
       </section>
     </Layout>
   );
