@@ -8,7 +8,7 @@ interface Props {
 const Card = ({ title, body, children, onClick }: Props) => {
   return (
     <div
-      className="flex flex-col py-10 cursor-pointer bg-gray-50 border-b dark:bg-gray-800"
+      className="flex flex-col py-10 w-full cursor-pointer bg-gray-50 border-b dark:bg-gray-800"
       onClick={onClick}
     >
       <div className="flex justify-between items-center">

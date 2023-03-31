@@ -4,6 +4,7 @@ import { MouseEvent, useEffect, useState } from 'react';
 import { HiTrash } from 'react-icons/hi';
 import Card from '../components/Card';
 import LoadingSpinner from '../components/LoadingSpinner';
+import Pagination from './Pagination';
 
 interface IPostData {
   title: string;
@@ -55,34 +56,39 @@ const BlogList = ({ isAdmin }: Props) => {
     );
   }
 
+  const renderBlogList = () => {
+    return posts
+      .filter((post) => {
+        return isAdmin || post.publish;
+      })
+      .map((post) => {
+        return (
+          <Card
+            key={post.id}
+            title={post.title}
+            body={post.body}
+            onClick={() => router.push(`/blogs/${post.id}`)}
+          >
+            {isAdmin ? (
+              <button
+                className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-gray-200 hover:bg-gray-900 transition outline-none focus:ring-4 focus:ring-gray-300"
+                onClick={(e) => deleteBlog(e, post.id)}
+              >
+                <HiTrash className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+              </button>
+            ) : undefined}
+          </Card>
+        );
+      });
+  };
+
   // 포스트 데이터를 화면에 출력
   // filter: true를 return하면 그대로 남아있고, false를 return하면 사라진다.
   return (
-    <>
-      {posts
-        .filter((post) => {
-          return isAdmin || post.publish;
-        })
-        .map((post) => {
-          return (
-            <Card
-              key={post.id}
-              title={post.title}
-              body={post.body}
-              onClick={() => router.push(`/blogs/${post.id}`)}
-            >
-              {isAdmin ? (
-                <button
-                  className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-gray-200 hover:bg-gray-900 transition outline-none focus:ring-4 focus:ring-gray-300"
-                  onClick={(e) => deleteBlog(e, post.id)}
-                >
-                  <HiTrash className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                </button>
-              ) : undefined}
-            </Card>
-          );
-        })}
-    </>
+    <div className='flex flex-col items-center'>
+      {renderBlogList()}
+      <Pagination />
+    </div>
   );
 };
 
