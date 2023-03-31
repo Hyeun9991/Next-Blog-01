@@ -23,11 +23,15 @@ const BlogList = ({ isAdmin }: Props) => {
   const [posts, setPosts] = useState<IPostData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const getPosts = () => {
-    axios.get('http://localhost:3001/posts').then((res) => {
-      setPosts(res.data);
-      setLoading(false);
-    });
+  const getPosts = (page: number = 1) => {
+    axios
+      .get(
+        `http://localhost:3001/posts?_page=${page}&_limit=5&_sort=id&_order=desc`
+      )
+      .then((res) => {
+        setPosts(res.data);
+        setLoading(false);
+      });
   };
 
   const deleteBlog = (e: MouseEvent<HTMLButtonElement>, id: number) => {
@@ -85,7 +89,7 @@ const BlogList = ({ isAdmin }: Props) => {
   // 포스트 데이터를 화면에 출력
   // filter: true를 return하면 그대로 남아있고, false를 return하면 사라진다.
   return (
-    <div className='flex flex-col items-center'>
+    <div className="flex flex-col items-center">
       {renderBlogList()}
       <Pagination />
     </div>

@@ -68,6 +68,13 @@
       "publish": true,
       "createdAt": 1680231625527,
       "id": 16
+    },
+    {
+      "title": "새로운 포스트",
+      "body": "입니다",
+      "publish": false,
+      "createdAt": 1680245503226,
+      "id": 17
     }
   ]
 }
