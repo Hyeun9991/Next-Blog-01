@@ -27,9 +27,22 @@ interface Props {
 
 const BlogList = ({ isAdmin }: Props) => {
   const router = useRouter();
+
   const [posts, setPosts] = useState<IPostData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [numberOfPosts, setNumberOfPosts] = useState<number>(0);
+  const [numberOfPages, setNumberOfPages] = useState<number>(0);
+
+  const limit = 5;
+  /**
+   * db에서 가져온 데이터의 총 개수에 limit(5)를 나눈값으로 페이지 개수 return하기
+   * numberOfPosts: params 객체 조건에 맞게 db에서 가져온 데이터의 총 개수
+   * numberOfPages: 데이터의 총 개수에 limit(5)를 나눈 값, 페이지 개수
+   */
+  useEffect(() => {
+    setNumberOfPages(Math.ceil(numberOfPosts / limit));
+  }, [numberOfPosts]);
 
   /**
    * db에 get 요청을 보내서 posts data를 가져오는 함수
@@ -55,6 +68,7 @@ const BlogList = ({ isAdmin }: Props) => {
         params,
       })
       .then((res) => {
+        setNumberOfPosts(res.headers['x-total-count']); // X-Total-Count: params 객체 조건에 맞는 data 총 개수
         setPosts(res.data); // posts state에 요청받은 데이터 담기
         setLoading(false); // 로딩 종료
       });
@@ -118,11 +132,15 @@ const BlogList = ({ isAdmin }: Props) => {
   return (
     <div className="flex flex-col items-center">
       {renderBlogList()}
-      <Pagination
-        currentPage={currentPage}
-        numberOfPages={3}
-        onClick={getPosts}
-      />
+
+      {numberOfPages > 1 && (
+        // numberOfPages가 1보다 작으면 화면에 출력 안함
+        <Pagination
+          currentPage={currentPage}
+          numberOfPages={numberOfPages}
+          onClick={getPosts}
+        />
+      )}
     </div>
   );
 };
