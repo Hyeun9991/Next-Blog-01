@@ -6,7 +6,7 @@ const Header = () => {
   const router = useRouter();
 
   return (
-    <nav className="fixed t-0 l-0 w-full px-4 py-2.5 bg-gray-50/60 backdrop-blur-md sm:px-0 sm:py-4 dark:bg-gray-900">
+    <nav className="fixed z-10 t-0 l-0 w-full px-4 py-2.5 bg-gray-50/60 backdrop-blur-md sm:px-0 sm:py-4 dark:bg-gray-900">
       <div className="sm:w-11/12 flex flex-wrap items-center justify-between mx-auto">
         <Link
           href="/"

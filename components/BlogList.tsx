@@ -1,7 +1,15 @@
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { MouseEvent, useCallback, useEffect, useState } from 'react';
+import {
+  ChangeEvent,
+  KeyboardEvent,
+  MouseEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { HiTrash } from 'react-icons/hi';
+import { FiSearch } from 'react-icons/fi';
 import Card from '../components/Card';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Pagination from './Pagination';
@@ -12,6 +20,7 @@ interface IParams {
   _sort: string;
   _order: string;
   publish?: boolean;
+  title_like: string;
 }
 
 interface IPostData {
@@ -37,6 +46,7 @@ const BlogList = ({ isAdmin }: Props) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [numberOfPosts, setNumberOfPosts] = useState<number>(0);
   const [numberOfPages, setNumberOfPages] = useState<number>(0);
+  const [searchText, setSearchText] = useState<string>('');
 
   /**
    * db에서 가져온 데이터의 총 개수에 limit(5)를 나눈값으로 페이지 개수 return하기
@@ -53,6 +63,7 @@ const BlogList = ({ isAdmin }: Props) => {
   const onClickPageButton = (page: number = 1) => {
     router.push(`${router.pathname}?page=${page}`);
     getPosts(page);
+    setCurrentPage(page);
   };
 
   /**
@@ -65,6 +76,7 @@ const BlogList = ({ isAdmin }: Props) => {
         _limit: limit,
         _sort: 'id',
         _order: 'desc',
+        title_like: searchText,
       };
 
       // admin이 아니면 공개된 포스트만 요청
@@ -83,7 +95,7 @@ const BlogList = ({ isAdmin }: Props) => {
           setLoading(false); // 로딩 종료
         });
     },
-    [isAdmin]
+    [isAdmin, searchText]
   );
 
   /**
@@ -113,15 +125,6 @@ const BlogList = ({ isAdmin }: Props) => {
     return <LoadingSpinner />;
   }
 
-  // db에 포스트 데이터가 없으면 메세지 출력
-  if (posts.length === 0) {
-    return (
-      <h2 className="text-sm mt-10">
-        작성된 게시글이 없습니다. 새로운 글을 작성해보세요.
-      </h2>
-    );
-  }
-
   /**
    * 요청받은 posts data를 화면에 출력하는 함수
    */
@@ -147,18 +150,52 @@ const BlogList = ({ isAdmin }: Props) => {
     });
   };
 
+  const onSearch = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      router.push(`${router.pathname}?page=1}`);
+      setCurrentPage(1);
+      getPosts(1);
+    }
+  };
+
+
   // 포스트 데이터를 화면에 출력
   return (
     <div className="flex flex-col items-center">
-      {renderBlogList()}
+      <form className="flex items-center gap-2 w-full mt-8 mb-8">
+        <label htmlFor="simple-search" className="sr-only">
+          Search
+        </label>
+        <div className="relative w-full">
+          <input
+            type="text"
+            id="simple-search"
+            className="bg-gray-50 text-gray-900 text-sm border-b block w-full p-1.5 outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-white dark:focus:border-white"
+            placeholder="검색"
+            required
+            value={searchText}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              setSearchText(e.target.value)
+            }
+            onKeyUp={onSearch}
+          />
+        </div>
+      </form>
 
-      {numberOfPages > 1 && (
-        // numberOfPages가 1보다 작으면 화면에 출력 안함
-        <Pagination
-          currentPage={currentPage}
-          numberOfPages={numberOfPages}
-          onClick={onClickPageButton}
-        />
+      {posts.length === 0 ? (
+        <p className="text-sm mt-14 font-bold">작성된 게시글이 없습니다.</p>
+      ) : (
+        <>
+          {renderBlogList()}
+          {numberOfPages > 1 && (
+            // numberOfPages가 1보다 작으면 화면에 출력 안함
+            <Pagination
+              currentPage={currentPage}
+              numberOfPages={numberOfPages}
+              onClick={onClickPageButton}
+            />
+          )}
+        </>
       )}
     </div>
   );

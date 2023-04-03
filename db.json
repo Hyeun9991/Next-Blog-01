@@ -97,6 +97,13 @@
       "publish": true,
       "createdAt": 1680249595294,
       "id": 20
+    },
+    {
+      "title": "new title",
+      "body": "new body",
+      "publish": false,
+      "createdAt": 1680505570108,
+      "id": 21
     }
   ]
 }
