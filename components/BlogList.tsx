@@ -13,6 +13,8 @@ import Card from '../components/Card';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Pagination from './Pagination';
 import Toast from './Toast';
+import { IToast } from './Toast';
+import { v4 as uuidv4 } from 'uuid';
 
 interface IParams {
   _page: number;
@@ -47,6 +49,7 @@ const BlogList = ({ isAdmin }: Props) => {
   const [numberOfPosts, setNumberOfPosts] = useState<number>(0);
   const [numberOfPages, setNumberOfPages] = useState<number>(0);
   const [searchText, setSearchText] = useState<string>('');
+  const [toasts, setToasts] = useState<IToast[]>([]);
 
   /**
    * db에서 가져온 데이터의 총 개수에 limit(5)를 나눈값으로 페이지 개수 return하기
@@ -110,13 +113,45 @@ const BlogList = ({ isAdmin }: Props) => {
   }, [getPosts, pageParam]);
 
   /**
+   * 유니크한 키를 추가해서 토스트알림을 생성하는 함수
+   */
+  const addToast = (toast: IToast) => {
+    const toastWithId = {
+      ...toast,
+      id: uuidv4(),
+    };
+    setToasts((prev) => [...prev, toastWithId]);
+  };
+
+  /**
+   * 토스트알림을 클릭하면 토스트알림을 삭제하는 함수
+   * @param id Toast component에서 전달받은 toast id
+   */
+  const deleteToast = (id?: string) => {
+    const filteredToasts = toasts.filter((toast) => {
+      return toast.id !== id;
+    });
+
+    setToasts(filteredToasts);
+  };
+
+  /**
    * db에 delete 요청을 보내서 id가 일치하지 않는 데이터만 return 하는 함수
    */
   const deleteBlog = (e: MouseEvent<HTMLButtonElement>, id: number) => {
     e.stopPropagation();
 
     axios.delete(`http://localhost:3001/posts/${id}`).then(() => {
+      // id를 비교해서 일치하지 않는 값만 state에 업데이트해서 화면에 출력
       setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
+
+      // 성공 토스트알림 생성
+      addToast({
+        text: '게시글이 성공적으로 삭제되었습니다.',
+        bg_color: 'bg-green-100/80',
+        border_color: 'border-green-300/30',
+        text_color: 'text-green-800',
+      });
     });
   };
 
@@ -150,6 +185,9 @@ const BlogList = ({ isAdmin }: Props) => {
     });
   };
 
+  /**
+   * 사용자의 입력값에 따른 data를 화면에 출력하는 함수
+   */
   const onSearch = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       router.push(`${router.pathname}?page=1}`);
@@ -162,20 +200,22 @@ const BlogList = ({ isAdmin }: Props) => {
   return (
     <div className="flex flex-col items-center">
       <Toast
-        toasts={[
-          {
-            text: 'Error',
-            bg_color: 'bg-red-100/80',
-            border_color: 'border-red-200/30',
-            text_color: 'text-red-800'
-          },
-          {
-            text: 'Success',
-            bg_color: 'bg-green-100/80',
-            border_color: 'border-green-300/30',
-            text_color: 'text-green-800'
-          },
-        ]}
+        // toasts={[
+        //   {
+        //     text: 'Error',
+        //     bg_color: 'bg-red-100/80',
+        //     border_color: 'border-red-200/30',
+        //     text_color: 'text-red-800',
+        //   },
+        //   {
+        //     text: 'Success',
+        //     bg_color: 'bg-green-100/80',
+        //     border_color: 'border-green-300/30',
+        //     text_color: 'text-green-800',
+        //   },
+        // ]}
+        toasts={toasts}
+        deleteToast={deleteToast}
       />
       <form className="flex items-center gap-2 w-full mt-8 mb-8">
         <label htmlFor="simple-search" className="sr-only">

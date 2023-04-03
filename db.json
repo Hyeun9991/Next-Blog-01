@@ -69,48 +69,6 @@
       "publish": true,
       "createdAt": 1680231625527,
       "id": 16
-    },
-    {
-      "title": "새로운 포스트",
-      "body": "입니다",
-      "publish": false,
-      "createdAt": 1680245503226,
-      "id": 17
-    },
-    {
-      "title": "ㅅㄷㄴㅅ",
-      "body": "ㄴㅇㅁㅇ",
-      "publish": false,
-      "createdAt": 1680249588330,
-      "id": 18
-    },
-    {
-      "title": "!!!",
-      "body": "!",
-      "publish": true,
-      "createdAt": 1680249591702,
-      "id": 19
-    },
-    {
-      "title": "ㄱㄷㅈㄱ",
-      "body": "3",
-      "publish": true,
-      "createdAt": 1680249595294,
-      "id": 20
-    },
-    {
-      "title": "new title",
-      "body": "new body",
-      "publish": false,
-      "createdAt": 1680505570108,
-      "id": 21
-    },
-    {
-      "title": "ㅁㅇㄴ",
-      "body": "sdads",
-      "publish": false,
-      "createdAt": 1680506520548,
-      "id": 22
     }
   ]
 }
