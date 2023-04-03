@@ -9,10 +9,10 @@ import {
   useState,
 } from 'react';
 import { HiTrash } from 'react-icons/hi';
-import { FiSearch } from 'react-icons/fi';
 import Card from '../components/Card';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Pagination from './Pagination';
+import Toast from './Toast';
 
 interface IParams {
   _page: number;
@@ -158,10 +158,25 @@ const BlogList = ({ isAdmin }: Props) => {
     }
   };
 
-
   // 포스트 데이터를 화면에 출력
   return (
     <div className="flex flex-col items-center">
+      <Toast
+        toasts={[
+          {
+            text: 'Error',
+            bg_color: 'bg-red-100/80',
+            border_color: 'border-red-200/30',
+            text_color: 'text-red-800'
+          },
+          {
+            text: 'Success',
+            bg_color: 'bg-green-100/80',
+            border_color: 'border-green-300/30',
+            text_color: 'text-green-800'
+          },
+        ]}
+      />
       <form className="flex items-center gap-2 w-full mt-8 mb-8">
         <label htmlFor="simple-search" className="sr-only">
           Search
