@@ -19,6 +19,8 @@ const BlogForm = ({ editing }: Props) => {
   const [originalBody, setOriginalBody] = useState<string>('');
   const [publish, setPublish] = useState<boolean>(false);
   const [originalPublish, setOriginalPublish] = useState<boolean>(false);
+  const [titleError, setTitleError] = useState<boolean>(false);
+  const [bodyError, setBodyError] = useState<boolean>(false);
 
   useEffect(() => {
     /**
@@ -64,9 +66,34 @@ const BlogForm = ({ editing }: Props) => {
   };
 
   /**
+   * title, body 유효성 체크하는 함수
+   */
+  const validateForm = () => {
+    let validated = true;
+
+    if (title === '') {
+      setTitleError(true);
+      validated = false;
+    }
+    if (body === '') {
+      setBodyError(true);
+      validated = false;
+    }
+
+    return validated;
+  };
+
+  /**
    * db에 editing이 true면 patch 메소드를 보내고, false면 post 메소드를 보내는 함수
    */
   const onSubmit = () => {
+    // 초기화
+    setTitleError(false);
+    setBodyError(false);
+
+    // 유효성 검사에 통과하지 못하면 return
+    if (!validateForm()) return;
+
     if (editing) {
       axios
         .patch(`http://localhost:3001/posts/${id}`, {
@@ -144,13 +171,18 @@ const BlogForm = ({ editing }: Props) => {
         ></label>
         <input
           type="text"
-          className="bg-gray-50 text-gray-900 text-4xl outline-none focus:border-gray-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
+          className={`bg-gray-50 text-gray-900 text-4xl outline-none focus:border-gray-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500 ${
+            titleError ? 'border-b-4 border-red-600' : ''
+          }`}
           value={title}
           placeholder="제목을 입력하세요"
           onChange={(event) => {
             setTitle(event.target.value);
           }}
         />
+        {titleError && (
+          <p className="text-red-600 text-sm">제목을 입력하세요.</p>
+        )}
       </div>
       <div className="mb-3">
         <label
@@ -158,7 +190,9 @@ const BlogForm = ({ editing }: Props) => {
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         ></label>
         <textarea
-          className="bg-gray-50 text-gray-900 text-md resize-none outline-none	 focus:ring-gray-500 focus:border-gray-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
+          className={`bg-gray-50 text-gray-900 text-md resize-none outline-none	 focus:ring-gray-500 focus:border-gray-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500 ${
+            bodyError ? 'border-b-4 border-red-600' : ''
+          }`}
           rows={18}
           value={body}
           placeholder="당신의 이야기를 적어보세요"
@@ -166,6 +200,9 @@ const BlogForm = ({ editing }: Props) => {
             setBody(event.target.value);
           }}
         />
+        {bodyError && (
+          <p className="text-red-600 text-sm">내용을 입력하세요.</p>
+        )}
       </div>
     </div>
   );
