@@ -34,7 +34,7 @@ const BlogList = ({ isAdmin }: Props) => {
   const [numberOfPosts, setNumberOfPosts] = useState<number>(0);
   const [numberOfPages, setNumberOfPages] = useState<number>(0);
 
-  const limit = 5;
+  const limit = 1;
   /**
    * db에서 가져온 데이터의 총 개수에 limit(5)를 나눈값으로 페이지 개수 return하기
    * numberOfPosts: params 객체 조건에 맞게 db에서 가져온 데이터의 총 개수
@@ -52,7 +52,7 @@ const BlogList = ({ isAdmin }: Props) => {
 
     let params: IParams = {
       _page: page,
-      _limit: 5,
+      _limit: limit,
       _sort: 'id',
       _order: 'desc',
     };
