@@ -19,6 +19,7 @@ interface IPostData {
   body: string;
   id: number;
   publish: boolean;
+  createdAt: number;
 }
 
 interface Props {
@@ -27,6 +28,9 @@ interface Props {
 
 const BlogList = ({ isAdmin }: Props) => {
   const router = useRouter();
+  const params = new URLSearchParams(router.asPath.split(/\?/)[1]);
+  const pageParam = params.get('page') ?? '';
+  const limit = 5;
 
   const [posts, setPosts] = useState<IPostData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -34,7 +38,6 @@ const BlogList = ({ isAdmin }: Props) => {
   const [numberOfPosts, setNumberOfPosts] = useState<number>(0);
   const [numberOfPages, setNumberOfPages] = useState<number>(0);
 
-  const limit = 1;
   /**
    * db에서 가져온 데이터의 총 개수에 limit(5)를 나눈값으로 페이지 개수 return하기
    * numberOfPosts: params 객체 조건에 맞게 db에서 가져온 데이터의 총 개수
@@ -45,11 +48,17 @@ const BlogList = ({ isAdmin }: Props) => {
   }, [numberOfPosts]);
 
   /**
+   * url을 기억해서 뒤로 가기 버튼을 누르면 이전 페이지로 이동하는 함수
+   */
+  const onClickPageButton = (page: number = 1) => {
+    router.push(`/${router.pathname}?page=${page}`);
+    getPosts(page);
+  };
+
+  /**
    * db에 get 요청을 보내서 posts data를 가져오는 함수
    */
   const getPosts = (page: number = 1) => {
-    setCurrentPage(page);
-
     let params: IParams = {
       _page: page,
       _limit: limit,
@@ -75,6 +84,17 @@ const BlogList = ({ isAdmin }: Props) => {
   };
 
   /**
+   * 처음 admin, blogs 페이지로 접속했을 때 쿼리스트링이 없음으로 null이 return됨
+   * , 이걸 방지하기 위해 or 연산자를 이용해서 1을 return 해줌
+   *
+   * pageParam 을 가져올때 string으로 가져오기 때문에 parseInt를 사용해서 숫자로 바꿔줌
+   */
+  useEffect(() => {
+    setCurrentPage(parseInt(pageParam) || 1);
+    getPosts(parseInt(pageParam) || 1);
+  }, [pageParam]);
+
+  /**
    * db에 delete 요청을 보내서 id가 일치하지 않는 데이터만 return 하는 함수
    */
   const deleteBlog = (e: MouseEvent<HTMLButtonElement>, id: number) => {
@@ -84,10 +104,6 @@ const BlogList = ({ isAdmin }: Props) => {
       setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
     });
   };
-
-  useEffect(() => {
-    getPosts();
-  }, []);
 
   // 로딩중이면 로딩스피너를 화면에 출력
   if (loading) {
@@ -138,7 +154,7 @@ const BlogList = ({ isAdmin }: Props) => {
         <Pagination
           currentPage={currentPage}
           numberOfPages={numberOfPages}
-          onClick={getPosts}
+          onClick={onClickPageButton}
         />
       )}
     </div>

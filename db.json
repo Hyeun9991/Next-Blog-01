@@ -87,14 +87,14 @@
     {
       "title": "!!!",
       "body": "!",
-      "publish": false,
+      "publish": true,
       "createdAt": 1680249591702,
       "id": 19
     },
     {
       "title": "ㄱㄷㅈㄱ",
       "body": "3",
-      "publish": false,
+      "publish": true,
       "createdAt": 1680249595294,
       "id": 20
     }
