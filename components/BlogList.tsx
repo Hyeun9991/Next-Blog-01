@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { MouseEvent, useEffect, useState } from 'react';
+import { MouseEvent, useCallback, useEffect, useState } from 'react';
 import { HiTrash } from 'react-icons/hi';
 import Card from '../components/Card';
 import LoadingSpinner from '../components/LoadingSpinner';
@@ -51,37 +51,40 @@ const BlogList = ({ isAdmin }: Props) => {
    * url을 기억해서 뒤로 가기 버튼을 누르면 이전 페이지로 이동하는 함수
    */
   const onClickPageButton = (page: number = 1) => {
-    router.push(`/${router.pathname}?page=${page}`);
+    router.push(`${router.pathname}?page=${page}`);
     getPosts(page);
   };
 
   /**
    * db에 get 요청을 보내서 posts data를 가져오는 함수
    */
-  const getPosts = (page: number = 1) => {
-    let params: IParams = {
-      _page: page,
-      _limit: limit,
-      _sort: 'id',
-      _order: 'desc',
-    };
+  const getPosts = useCallback(
+    (page = 1) => {
+      let params: IParams = {
+        _page: page,
+        _limit: limit,
+        _sort: 'id',
+        _order: 'desc',
+      };
 
-    // admin이 아니면 공개된 포스트만 요청
-    if (!isAdmin) {
-      params = { ...params, publish: true };
-    }
+      // admin이 아니면 공개된 포스트만 요청
+      if (!isAdmin) {
+        params = { ...params, publish: true };
+      }
 
-    // params 객체에 맞는 데이터 요청
-    axios
-      .get(`http://localhost:3001/posts`, {
-        params,
-      })
-      .then((res) => {
-        setNumberOfPosts(res.headers['x-total-count']); // X-Total-Count: params 객체 조건에 맞는 data 총 개수
-        setPosts(res.data); // posts state에 요청받은 데이터 담기
-        setLoading(false); // 로딩 종료
-      });
-  };
+      // params 객체에 맞는 데이터 요청
+      axios
+        .get(`http://localhost:3001/posts`, {
+          params,
+        })
+        .then((res) => {
+          setNumberOfPosts(res.headers['x-total-count']); // X-Total-Count: params 객체 조건에 맞는 data 총 개수
+          setPosts(res.data); // posts state에 요청받은 데이터 담기
+          setLoading(false); // 로딩 종료
+        });
+    },
+    [isAdmin]
+  );
 
   /**
    * 처음 admin, blogs 페이지로 접속했을 때 쿼리스트링이 없음으로 null이 return됨
@@ -92,7 +95,7 @@ const BlogList = ({ isAdmin }: Props) => {
   useEffect(() => {
     setCurrentPage(parseInt(pageParam) || 1);
     getPosts(parseInt(pageParam) || 1);
-  }, [pageParam]);
+  }, [getPosts, pageParam]);
 
   /**
    * db에 delete 요청을 보내서 id가 일치하지 않는 데이터만 return 하는 함수
