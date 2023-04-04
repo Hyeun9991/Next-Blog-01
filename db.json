@@ -50,88 +50,11 @@
       "id": 13
     },
     {
-      "title": "아무거나",
-      "body": "ㅜㄹㅇ눌ㄹ",
-      "publish": false,
-      "createdAt": 1680231586671,
-      "id": 14
-    },
-    {
       "title": "몇 천개의 포스트를",
       "body": "한 페이지에 한 번에 불러오는것은 속도도 느려지고 비 효율적이다!",
       "publish": true,
       "createdAt": 1680231625527,
       "id": 16
-    },
-    {
-      "title": "a",
-      "body": "sa",
-      "publish": false,
-      "createdAt": 1680526486864,
-      "id": 17
-    },
-    {
-      "title": "sd",
-      "body": "dd",
-      "publish": false,
-      "createdAt": 1680526845909,
-      "id": 18
-    },
-    {
-      "title": "d",
-      "body": "d",
-      "publish": false,
-      "createdAt": 1680526894668,
-      "id": 19
-    },
-    {
-      "title": "d",
-      "body": "d",
-      "publish": false,
-      "createdAt": 1680526915556,
-      "id": 20
-    },
-    {
-      "title": "d",
-      "body": "d",
-      "publish": false,
-      "createdAt": 1680526917993,
-      "id": 21
-    },
-    {
-      "title": "d",
-      "body": "d",
-      "publish": false,
-      "createdAt": 1680527005775,
-      "id": 22
-    },
-    {
-      "title": "d",
-      "body": "d",
-      "publish": false,
-      "createdAt": 1680527008413,
-      "id": 23
-    },
-    {
-      "title": "ㅇ",
-      "body": "ㅇ",
-      "publish": false,
-      "createdAt": 1680527022724,
-      "id": 24
-    },
-    {
-      "title": "new",
-      "body": "posts",
-      "publish": false,
-      "createdAt": 1680569034506,
-      "id": 25
-    },
-    {
-      "title": "a",
-      "body": "a",
-      "publish": false,
-      "createdAt": 1680569772955,
-      "id": 27
     }
   ]
 }

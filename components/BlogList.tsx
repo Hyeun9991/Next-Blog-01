@@ -6,16 +6,14 @@ import {
   MouseEvent,
   useCallback,
   useEffect,
-  useRef,
   useState,
 } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import Card from '../components/Card';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Pagination from './Pagination';
 import Toast from './Toast';
 import { HiTrash } from 'react-icons/hi';
-import { IToast } from './Toast';
+import useToast from '../hooks/toast';
 
 interface IParams {
   _page: number;
@@ -39,6 +37,7 @@ interface Props {
 }
 
 const BlogList = ({ isAdmin }: Props) => {
+  const [toasts, addToast, deleteToast] = useToast();
   const router = useRouter();
   const params = new URLSearchParams(router.asPath.split(/\?/)[1]);
   const pageParam = params.get('page') ?? '';
@@ -50,8 +49,6 @@ const BlogList = ({ isAdmin }: Props) => {
   const [numberOfPosts, setNumberOfPosts] = useState<number>(0);
   const [numberOfPages, setNumberOfPages] = useState<number>(0);
   const [searchText, setSearchText] = useState<string>('');
-  const [, setToastRerender] = useState<boolean>(false);
-  const toasts = useRef<IToast[]>([]);
 
   /**
    * db에서 가져온 데이터의 총 개수에 limit(5)를 나눈값으로 페이지 개수 return하기
@@ -113,39 +110,6 @@ const BlogList = ({ isAdmin }: Props) => {
     setCurrentPage(parseInt(pageParam) || 1);
     getPosts(parseInt(pageParam) || 1);
   }, [getPosts, pageParam]);
-
-  /**
-   * 토스트알림을 클릭하면 토스트알림을 삭제하는 함수
-   * @param id Toast component에서 전달받은 toast id
-   */
-  const deleteToast = (id?: string) => {
-    const filteredToasts = toasts.current.filter((toast) => {
-      return toast.id !== id;
-    });
-
-    toasts.current = filteredToasts; // useState를 useRef로 수정
-    setToastRerender((prev) => !prev);
-  };
-
-  /**
-   * 유니크한 키를 추가해서 토스트알림을 생성하는 함수
-   */
-  const addToast = (toast: IToast) => {
-    const id = uuidv4();
-    const toastWithId = {
-      ...toast,
-      id,
-    };
-
-    // id를 추가한 toast 객체로 업데이트
-    toasts.current = [...toasts.current, toastWithId]; // useState를 useRef로 수정
-    setToastRerender((prev) => !prev);
-
-    // 5초후에 생성된 토스트알림 삭제
-    setTimeout(() => {
-      deleteToast(id);
-    }, 5000);
-  };
 
   /**
    * db에 delete 요청을 보내서 id가 일치하지 않는 데이터만 return 하는 함수
@@ -211,7 +175,7 @@ const BlogList = ({ isAdmin }: Props) => {
   // 포스트 데이터를 화면에 출력
   return (
     <div className="flex flex-col items-center">
-      <Toast toasts={toasts.current} deleteToast={deleteToast} />
+      <Toast toasts={toasts} deleteToast={deleteToast} />
       <form className="flex items-center gap-2 w-full mt-4 mb-4">
         <label htmlFor="simple-search" className="sr-only">
           Search
