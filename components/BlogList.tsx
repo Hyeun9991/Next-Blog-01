@@ -6,15 +6,16 @@ import {
   MouseEvent,
   useCallback,
   useEffect,
+  useRef,
   useState,
 } from 'react';
-import { HiTrash } from 'react-icons/hi';
+import { v4 as uuidv4 } from 'uuid';
 import Card from '../components/Card';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Pagination from './Pagination';
 import Toast from './Toast';
+import { HiTrash } from 'react-icons/hi';
 import { IToast } from './Toast';
-import { v4 as uuidv4 } from 'uuid';
 
 interface IParams {
   _page: number;
@@ -49,7 +50,8 @@ const BlogList = ({ isAdmin }: Props) => {
   const [numberOfPosts, setNumberOfPosts] = useState<number>(0);
   const [numberOfPages, setNumberOfPages] = useState<number>(0);
   const [searchText, setSearchText] = useState<string>('');
-  const [toasts, setToasts] = useState<IToast[]>([]);
+  const [, setToastRerender] = useState<boolean>(false);
+  const toasts = useRef<IToast[]>([]);
 
   /**
    * db에서 가져온 데이터의 총 개수에 limit(5)를 나눈값으로 페이지 개수 return하기
@@ -113,26 +115,36 @@ const BlogList = ({ isAdmin }: Props) => {
   }, [getPosts, pageParam]);
 
   /**
-   * 유니크한 키를 추가해서 토스트알림을 생성하는 함수
-   */
-  const addToast = (toast: IToast) => {
-    const toastWithId = {
-      ...toast,
-      id: uuidv4(),
-    };
-    setToasts((prev) => [...prev, toastWithId]);
-  };
-
-  /**
    * 토스트알림을 클릭하면 토스트알림을 삭제하는 함수
    * @param id Toast component에서 전달받은 toast id
    */
   const deleteToast = (id?: string) => {
-    const filteredToasts = toasts.filter((toast) => {
+    const filteredToasts = toasts.current.filter((toast) => {
       return toast.id !== id;
     });
 
-    setToasts(filteredToasts);
+    toasts.current = filteredToasts; // useState를 useRef로 수정
+    setToastRerender((prev) => !prev);
+  };
+
+  /**
+   * 유니크한 키를 추가해서 토스트알림을 생성하는 함수
+   */
+  const addToast = (toast: IToast) => {
+    const id = uuidv4();
+    const toastWithId = {
+      ...toast,
+      id,
+    };
+
+    // id를 추가한 toast 객체로 업데이트
+    toasts.current = [...toasts.current, toastWithId]; // useState를 useRef로 수정
+    setToastRerender((prev) => !prev);
+
+    // 5초후에 생성된 토스트알림 삭제
+    setTimeout(() => {
+      deleteToast(id);
+    }, 5000);
   };
 
   /**
@@ -199,25 +211,8 @@ const BlogList = ({ isAdmin }: Props) => {
   // 포스트 데이터를 화면에 출력
   return (
     <div className="flex flex-col items-center">
-      <Toast
-        // toasts={[
-        //   {
-        //     text: 'Error',
-        //     bg_color: 'bg-red-100/80',
-        //     border_color: 'border-red-200/30',
-        //     text_color: 'text-red-800',
-        //   },
-        //   {
-        //     text: 'Success',
-        //     bg_color: 'bg-green-100/80',
-        //     border_color: 'border-green-300/30',
-        //     text_color: 'text-green-800',
-        //   },
-        // ]}
-        toasts={toasts}
-        deleteToast={deleteToast}
-      />
-      <form className="flex items-center gap-2 w-full mt-8 mb-8">
+      <Toast toasts={toasts.current} deleteToast={deleteToast} />
+      <form className="flex items-center gap-2 w-full mt-4 mb-4">
         <label htmlFor="simple-search" className="sr-only">
           Search
         </label>

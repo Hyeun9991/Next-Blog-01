@@ -1,9 +1,11 @@
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { RiSendPlaneFill } from 'react-icons/ri';
 import { BsCheckLg } from 'react-icons/bs';
 import { IoIosArrowBack } from 'react-icons/io';
+import Toast, { IToast } from './Toast';
+import { v4 as uuidv4 } from 'uuid';
 
 interface Props {
   editing: boolean;
@@ -21,6 +23,8 @@ const BlogForm = ({ editing }: Props) => {
   const [originalPublish, setOriginalPublish] = useState<boolean>(false);
   const [titleError, setTitleError] = useState<boolean>(false);
   const [bodyError, setBodyError] = useState<boolean>(false);
+  const [, setToastRerender] = useState<boolean>(false);
+  const toasts = useRef<IToast[]>([]);
 
   useEffect(() => {
     /**
@@ -84,6 +88,40 @@ const BlogForm = ({ editing }: Props) => {
   };
 
   /**
+   * 토스트알림을 클릭하면 토스트알림을 삭제하는 함수
+   * @param id Toast component에서 전달받은 toast id
+   */
+  const deleteToast = (id?: string) => {
+    const filteredToasts = toasts.current.filter((toast) => {
+      return toast.id !== id;
+    });
+
+    toasts.current = filteredToasts; // useState를 useRef로 수정
+    setToastRerender((prev) => !prev);
+  };
+
+  /**
+   * 유니크한 키를 추가해서 토스트알림을 생성하는 함수
+   */
+  const addToast = (toast: IToast) => {
+    console.log('add', toasts);
+    const id = uuidv4();
+    const toastWithId = {
+      ...toast,
+      id,
+    };
+
+    // id를 추가한 toast 객체로 업데이트
+    toasts.current = [...toasts.current, toastWithId]; // useState를 useRef로 수정
+    setToastRerender((prev) => !prev);
+
+    // 5초후에 생성된 토스트알림 삭제
+    setTimeout(() => {
+      deleteToast(id);
+    }, 5000);
+  };
+
+  /**
    * db에 editing이 true면 patch 메소드를 보내고, false면 post 메소드를 보내는 함수
    */
   const onSubmit = () => {
@@ -113,8 +151,16 @@ const BlogForm = ({ editing }: Props) => {
           createdAt: Date.now(),
         })
         .then(() => {
+          // 성공 토스트알림 생성
+          addToast({
+            text: '게시글이 성공적으로 생성되었습니다.',
+            bg_color: 'bg-green-100/80',
+            border_color: 'border-green-300/30',
+            text_color: 'text-green-800',
+          });
+
           // db에 성공적으로 데이터를 보내면 포스트 리스트 페이지로 이동
-          router.push('/admin');
+          // router.push('/admin');
         });
     }
   };
@@ -125,6 +171,7 @@ const BlogForm = ({ editing }: Props) => {
 
   return (
     <div className="w-full mx-auto text-gray-600 body-font">
+      <Toast toasts={toasts.current} deleteToast={deleteToast} />
       <div className="flex justify-between items-center mb-12">
         <button
           className="disabled:pointer-events-none w-7 h-7 sm:w-8 sm:h-8 bg-gray-200 hover:bg-black flex items-center justify-center rounded-full transition outline-none focus:ring-4 focus:ring-gray-300"
