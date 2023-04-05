@@ -1,6 +1,10 @@
 import type { AppProps } from 'next/app';
 import '../styles/globals.css';
 import { Roboto, Noto_Sans_KR } from 'next/font/google';
+import Toast from '../components/Toast';
+import useToast from '../hooks/toast';
+import { store } from '../store';
+import { Provider } from 'react-redux';
 
 const notoSansKr = Noto_Sans_KR({
   // preload: true, 기본값
@@ -19,10 +23,15 @@ export const cls = (...classnames: string[]) => {
 };
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [toasts, addToast, deleteToast] = useToast();
+
   return (
     <>
       <main className={cls(notoSansKr.className, roboto.variable)}>
-        <Component {...pageProps} />
+        <Toast toasts={toasts} deleteToast={deleteToast} />
+        <Provider store={store}>
+          <Component {...pageProps} addToast={addToast} />
+        </Provider>
       </main>
     </>
   );

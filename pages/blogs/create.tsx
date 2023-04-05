@@ -1,8 +1,13 @@
 import Head from 'next/head';
 import BlogForm from '../../components/BlogForm';
 import Layout from '../../components/layout';
+import { IToast } from '../../components/Toast';
 
-const create = () => {
+interface Props {
+  addToast: (toast: IToast) => void;
+}
+
+const create = ({ addToast }: Props) => {
   return (
     <Layout>
       <Head>
@@ -11,7 +16,7 @@ const create = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <BlogForm />
+      <BlogForm addToast={addToast} />
     </Layout>
   );
 };

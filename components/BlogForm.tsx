@@ -4,15 +4,14 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { RiSendPlaneFill } from 'react-icons/ri';
 import { BsCheckLg } from 'react-icons/bs';
 import { IoIosArrowBack } from 'react-icons/io';
-import Toast from './Toast';
-import useToast from '../hooks/toast';
+import { IToast } from './Toast';
 
 interface Props {
   editing: boolean;
+  addToast: (toast: IToast) => void;
 }
 
-const BlogForm = ({ editing }: Props) => {
-  const [toasts, addToast, deleteToast] = useToast();
+const BlogForm = ({ editing, addToast }: Props) => {
   const router = useRouter();
   const id = router.query.id;
 
@@ -125,7 +124,7 @@ const BlogForm = ({ editing }: Props) => {
           });
 
           // db에 성공적으로 데이터를 보내면 포스트 리스트 페이지로 이동
-          // router.push('/admin');
+          router.push('/admin');
         });
     }
   };
@@ -136,7 +135,6 @@ const BlogForm = ({ editing }: Props) => {
 
   return (
     <div className="w-full mx-auto text-gray-600 body-font">
-      <Toast toasts={toasts} deleteToast={deleteToast} />
       <div className="flex justify-between items-center mb-12">
         <button
           className="disabled:pointer-events-none w-7 h-7 sm:w-8 sm:h-8 bg-gray-200 hover:bg-black flex items-center justify-center rounded-full transition outline-none focus:ring-4 focus:ring-gray-300"
