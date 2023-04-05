@@ -14,6 +14,8 @@ import Pagination from './Pagination';
 import Toast from './Toast';
 import { HiTrash } from 'react-icons/hi';
 import useToast from '../hooks/toast';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
 
 interface IParams {
   _page: number;
@@ -42,6 +44,11 @@ const BlogList = ({ isAdmin }: Props) => {
   const params = new URLSearchParams(router.asPath.split(/\?/)[1]);
   const pageParam = params.get('page') ?? '';
   const limit = 5;
+
+  const toasts1 = useSelector((state: RootState) => {
+    return state.toast.toasts;
+  });
+  console.log('blog list', toasts1);
 
   const [posts, setPosts] = useState<IPostData[]>([]);
   const [loading, setLoading] = useState<boolean>(true);

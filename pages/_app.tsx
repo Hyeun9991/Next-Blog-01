@@ -29,6 +29,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <main className={cls(notoSansKr.className, roboto.variable)}>
         <Toast toasts={toasts} deleteToast={deleteToast} />
+        
         <Provider store={store}>
           <Component {...pageProps} addToast={addToast} />
         </Provider>
