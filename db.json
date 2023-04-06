@@ -36,13 +36,6 @@
       "id": 11
     },
     {
-      "title": "admin 경로 테스트",
-      "body": "중입니다",
-      "publish": true,
-      "createdAt": 1680231207118,
-      "id": 12
-    },
-    {
       "title": "페이지네이션 기능 구현하기",
       "body": "아직 구현안했을때 첫 번째 포스트",
       "publish": false,
@@ -55,27 +48,6 @@
       "publish": true,
       "createdAt": 1680231625527,
       "id": 16
-    },
-    {
-      "title": "w",
-      "body": "w",
-      "publish": false,
-      "createdAt": 1680664917578,
-      "id": 17
-    },
-    {
-      "title": "e",
-      "body": "e",
-      "publish": false,
-      "createdAt": 1680664923227,
-      "id": 18
-    },
-    {
-      "title": "r",
-      "body": "r",
-      "publish": false,
-      "createdAt": 1680665499271,
-      "id": 19
     }
   ]
 }

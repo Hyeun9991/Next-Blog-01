@@ -1,6 +1,3 @@
-import { useSelector } from 'react-redux';
-import { RootState } from '../store';
-
 interface Props {
   title: string;
   body: string;
@@ -9,11 +6,6 @@ interface Props {
 }
 
 const Card = ({ title, body, children, onClick }: Props) => {
-  const toasts = useSelector((state: RootState) => {
-    return state.toast.toasts;
-  });
-  console.log('card', toasts);
-
   return (
     <div
       className="flex flex-col py-10 w-full cursor-pointer bg-gray-50 border-b dark:bg-gray-800"
