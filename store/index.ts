@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import authReducer from './modules/authSlice';
+import authReducer from './authSlice';
 
 // *** store.ts 파일
 // 슬라이스들을 통합한 store를 만들고, RootState를 정의해준다.

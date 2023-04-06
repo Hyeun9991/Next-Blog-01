@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
-import { login, logout } from '../store/modules/authSlice';
+import { login, logout } from '../store/authSlice';
 
 const Header = () => {
   const router = useRouter();
