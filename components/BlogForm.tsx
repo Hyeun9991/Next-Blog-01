@@ -5,7 +5,6 @@ import { RiSendPlaneFill } from 'react-icons/ri';
 import { BsCheckLg } from 'react-icons/bs';
 import { IoIosArrowBack } from 'react-icons/io';
 import { IToast } from './Toast';
-import useToast from '../hooks/toast';
 
 interface Props {
   editing: boolean;
