@@ -1,7 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
 import BlogList from '../components/BlogList';
-import Layout from '../components/layout';
 import { HiPlusSm } from 'react-icons/hi';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -60,7 +59,7 @@ const Admin = () => {
   }, []);
 
   return (
-    <Layout>
+    <>
       <Head>
         <title>Eh | Admin</title>
       </Head>
@@ -90,7 +89,7 @@ const Admin = () => {
 
         <BlogList isAdmin={true} />
       </section>
-    </Layout>
+    </>
   );
 };
 

@@ -3,6 +3,11 @@ import '../styles/globals.css';
 import { Roboto, Noto_Sans_KR } from 'next/font/google';
 import Toast from '../components/Toast';
 import useToast from '../hooks/toast';
+import Layout from '../components/layout';
+
+/**
+ * 모든 페이지에 공통적으로 적용되는것은 이 파일에 정의
+ */
 
 const notoSansKr = Noto_Sans_KR({
   // preload: true, 기본값
@@ -24,11 +29,13 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [toasts, addToast, deleteToast] = useToast();
 
   return (
-    <main className={cls(notoSansKr.className, roboto.variable)}>
-      <Toast toasts={toasts} deleteToast={deleteToast} />
+    <Layout>
+      <main className={cls(notoSansKr.className, roboto.variable)}>
+        <Toast toasts={toasts} deleteToast={deleteToast} />
 
-      <Component {...pageProps} addToast={addToast} />
-    </main>
+        <Component {...pageProps} addToast={addToast} />
+      </main>
+    </Layout>
   );
 }
 

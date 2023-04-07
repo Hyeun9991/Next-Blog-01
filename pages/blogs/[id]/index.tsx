@@ -1,7 +1,6 @@
 import { GetStaticProps, NextPage } from 'next';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import Layout from '../../../components/layout';
 import LoadingSpinner from '../../../components/LoadingSpinner';
 import Link from 'next/link';
 import { AiFillEdit } from 'react-icons/ai';
@@ -38,7 +37,7 @@ const PostDetailPage: NextPage<Props> = ({ postGetData }) => {
   }
 
   return (
-    <Layout>
+    <>
       <Head>
         <title>Eh | {postGetData.title}</title>
       </Head>
@@ -60,7 +59,7 @@ const PostDetailPage: NextPage<Props> = ({ postGetData }) => {
       <pre className="font-notoSans text-gray-900 text-md outline-none focus:ring-gray-500 focus:border-gray-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500">
         {postGetData.body}
       </pre>
-    </Layout>
+    </>
   );
 };
 

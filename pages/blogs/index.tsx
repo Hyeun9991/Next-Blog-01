@@ -1,10 +1,9 @@
 import Head from 'next/head';
 import BlogList from '../../components/BlogList';
-import Layout from '../../components/layout';
 
 const Index = () => {
   return (
-    <Layout>
+    <>
       <Head>
         <title>Eh | Blogs</title>
       </Head>
@@ -15,7 +14,7 @@ const Index = () => {
         </div>
         <BlogList />
       </section>
-    </Layout>
+    </>
   );
 };
 

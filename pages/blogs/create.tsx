@@ -1,6 +1,5 @@
 import Head from 'next/head';
 import BlogForm from '../../components/BlogForm';
-import Layout from '../../components/layout';
 import { IToast } from '../../components/Toast';
 
 interface Props {
@@ -9,7 +8,7 @@ interface Props {
 
 const create = ({ addToast }: Props) => {
   return (
-    <Layout>
+    <>
       <Head>
         <title>Eh | Create</title>
         <meta name="description" content="Next.js로 만든 블로그" />
@@ -17,7 +16,7 @@ const create = ({ addToast }: Props) => {
       </Head>
 
       <BlogForm addToast={addToast} />
-    </Layout>
+    </>
   );
 };
 

@@ -1,18 +1,11 @@
-import Document, {
-  Html,
-  Head,
-  Main,
-  NextScript,
-  DocumentContext,
-} from 'next/document';
+import Document, { Html, Head, Main, NextScript } from 'next/document';
+
+/**
+ * 서버에서만 랜더링되고, onClick같은 이벤트 핸들러는 작동하지 않음.
+ * (css도 이 파일에서는 사용하지 않음)
+ */
 
 class MyDocument extends Document {
-  static async getInitialProps(ctx: DocumentContext) {
-    const initialProps = await Document.getInitialProps(ctx);
-
-    return initialProps;
-  }
-
   render() {
     return (
       <Html lang="ko">
@@ -22,7 +15,7 @@ class MyDocument extends Document {
             rel="stylesheet"
           />
         </Head>
-        <body className='bg-gray-50'>
+        <body className="bg-gray-50">
           <Main />
           <NextScript />
         </body>
