@@ -8,10 +8,7 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
-      fontFamily: {
-        roboto: ["var(--roboto)"],
-        notoSans: ["var(--notoSansKr)"],
-      },
+      fontFamily: {},
     },
   },
   plugins: [],
