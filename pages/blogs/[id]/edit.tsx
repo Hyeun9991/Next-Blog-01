@@ -1,7 +1,12 @@
 import Head from 'next/head';
 import BlogForm from '../../../components/BlogForm';
+import { IToast } from '../../../components/Toast';
 
-const edit = () => {
+interface Props {
+  addToast: (toast: IToast) => void;
+}
+
+const edit = ({ addToast }: Props) => {
   return (
     <>
       <Head>
@@ -10,7 +15,7 @@ const edit = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <BlogForm editing={true}/>
+      <BlogForm editing={true} addToast={addToast} />
     </>
   );
 };

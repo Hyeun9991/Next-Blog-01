@@ -49,6 +49,7 @@ const BlogList = ({ isAdmin }: Props) => {
   const [numberOfPosts, setNumberOfPosts] = useState<number>(0);
   const [numberOfPages, setNumberOfPages] = useState<number>(0);
   const [searchText, setSearchText] = useState<string>('');
+  const [error, setError] = useState<string>('');
 
   /**
    * db에서 가져온 데이터의 총 개수에 limit(5)를 나눈값으로 페이지 개수 return하기
@@ -95,6 +96,16 @@ const BlogList = ({ isAdmin }: Props) => {
           setNumberOfPosts(res.headers['x-total-count']); // X-Total-Count: params 객체 조건에 맞는 data 총 개수
           setPosts(res.data); // posts state에 요청받은 데이터 담기
           setLoading(false); // 로딩 종료
+        })
+        .catch((e) => {
+          setLoading(false); // 로딩 종료
+          setError('데이터베이스에 문제가 생겼습니다.');
+          addToast({
+            text: '데이터베이스에 문제가 생겼습니다.',
+            bg_color: 'bg-red-100/80',
+            border_color: 'border-red-300/30',
+            text_color: 'text-red-800',
+          });
         });
     },
     [isAdmin, searchText]
@@ -117,18 +128,28 @@ const BlogList = ({ isAdmin }: Props) => {
   const deleteBlog = (e: MouseEvent<HTMLButtonElement>, id: number) => {
     e.stopPropagation();
 
-    axios.delete(`http://localhost:3001/posts/${id}`).then(() => {
-      // id를 비교해서 일치하지 않는 값만 state에 업데이트해서 화면에 출력
-      setPosts((prevPosts) => prevPosts.filter((post) => post.id !== id));
+    axios
+      .delete(`http://localhost:3001/posts/${id}`)
+      .then(() => {
+        // id를 비교해서 일치하지 않는 값만 state에 업데이트해서 화면에 출력
+        getPosts(1);
 
-      // 성공 토스트알림 생성
-      addToast({
-        text: '게시글이 성공적으로 삭제되었습니다.',
-        bg_color: 'bg-green-100/80',
-        border_color: 'border-green-300/30',
-        text_color: 'text-green-800',
+        // 성공 토스트알림 생성
+        addToast({
+          text: '게시글이 성공적으로 삭제되었습니다.',
+          bg_color: 'bg-green-100/80',
+          border_color: 'border-green-300/30',
+          text_color: 'text-green-800',
+        });
+      })
+      .catch((e) => {
+        addToast({
+          text: '게시글을 삭제할 수 없습니다.',
+          bg_color: 'bg-red-100/80',
+          border_color: 'border-red-300/30',
+          text_color: 'text-red-800',
+        });
       });
-    });
   };
 
   // 로딩중이면 로딩스피너를 화면에 출력
@@ -171,6 +192,10 @@ const BlogList = ({ isAdmin }: Props) => {
       getPosts(1);
     }
   };
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   // 포스트 데이터를 화면에 출력
   return (

@@ -18,13 +18,13 @@
       "title": "버튼 비활성화 테스트하는 포스트",
       "body": "대충 내용 어쩌고 저쩌고 블라면?",
       "createdAt": 1680080710182,
-      "publish": false,
+      "publish": true,
       "id": 9
     },
     {
       "title": "공개 여부 기능 테스트",
       "body": "테스트 중",
-      "publish": true,
+      "publish": false,
       "createdAt": 1680145131779,
       "id": 10
     },
@@ -38,16 +38,9 @@
     {
       "title": "페이지네이션 기능 구현하기",
       "body": "아직 구현안했을때 첫 번째 포스트",
-      "publish": false,
+      "publish": true,
       "createdAt": 1680231578611,
       "id": 13
-    },
-    {
-      "title": "몇 천개의 포스트를",
-      "body": "한 페이지에 한 번에 불러오는것은 속도도 느려지고 비 효율적이다!",
-      "publish": true,
-      "createdAt": 1680231625527,
-      "id": 16
     }
   ]
 }

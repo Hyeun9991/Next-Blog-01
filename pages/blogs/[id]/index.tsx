@@ -20,16 +20,16 @@ interface Props {
 const PostDetailPage: NextPage<Props> = ({ postGetData }) => {
   const [loading, setLoading] = useState<boolean>(true);
 
+  const printDate = (timestamp: number) => {
+    return new Date(timestamp).toLocaleString();
+  };
+
   useEffect(() => {
     // 데이터를 받아오면 로딩 완료
     if (postGetData) {
       setLoading(false);
     }
   }, [postGetData]);
-
-  const printDate = (timestamp: number) => {
-    return new Date(timestamp).toLocaleString();
-  };
 
   // 로딩중이면 로딩스피너를 화면에 출력
   if (loading) {
@@ -81,6 +81,7 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async (context: any) => {
   const { id } = context.params;
+
   const res = await axios.get(`http://localhost:3001/posts/${id}`);
   const data = res.data;
 

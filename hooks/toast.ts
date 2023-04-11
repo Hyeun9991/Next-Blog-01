@@ -31,7 +31,6 @@ const useToast = (): [
    * 유니크한 키를 추가해서 토스트알림을 생성하는 함수
    */
   const addToast = (toast: IToast) => {
-    console.log('add', toasts);
     const id = uuidv4();
     const toastWithId = {
       ...toast,

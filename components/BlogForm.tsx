@@ -5,6 +5,7 @@ import { RiSendPlaneFill } from 'react-icons/ri';
 import { BsCheckLg } from 'react-icons/bs';
 import { IoIosArrowBack } from 'react-icons/io';
 import { IToast } from './Toast';
+import LoadingSpinner from './LoadingSpinner';
 
 interface Props {
   editing: boolean;
@@ -23,6 +24,8 @@ const BlogForm = ({ editing, addToast }: Props) => {
   const [originalPublish, setOriginalPublish] = useState<boolean>(false);
   const [titleError, setTitleError] = useState<boolean>(false);
   const [bodyError, setBodyError] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string>('');
 
   useEffect(() => {
     /**
@@ -33,16 +36,31 @@ const BlogForm = ({ editing, addToast }: Props) => {
      * 해결방안: 서버사이드에서 쿼리값을 넘겨주면 새로고침을 해도 값이 증발하지 않는다.
      * 하지만 pages 폴더가 아닌 components 폴더 컴포넌트인 경우 서버사이드 기능을 사용하지 못 한다.
      */
-    if (!editing) return;
-
-    axios.get(`http://localhost:3001/posts/${id}`).then((res) => {
-      setTitle(res.data.title);
-      setBody(res.data.body);
-      setOriginalTitle(res.data.title);
-      setOriginalBody(res.data.body);
-      setPublish(res.data.publish);
-      setOriginalPublish(res.data.publish);
-    });
+    if (editing) {
+      axios
+        .get(`http://localhost:3001/posts/${id}`)
+        .then((res) => {
+          setTitle(res.data.title);
+          setBody(res.data.body);
+          setOriginalTitle(res.data.title);
+          setOriginalBody(res.data.body);
+          setPublish(res.data.publish);
+          setOriginalPublish(res.data.publish);
+          setLoading(false);
+        })
+        .catch((e) => {
+          setLoading(false);
+          setError('데이터베이스에 문제가 생겼습니다.');
+          addToast({
+            text: '데이터베이스에 문제가 생겼습니다.',
+            bg_color: 'bg-red-100/80',
+            border_color: 'border-red-300/30',
+            text_color: 'text-red-800',
+          });
+        });
+    } else {
+      setLoading(false);
+    }
   }, [editing, id]);
 
   /**
@@ -105,6 +123,14 @@ const BlogForm = ({ editing, addToast }: Props) => {
         })
         .then(() => {
           router.push(`/blogs/${id}`);
+        })
+        .catch((e) => {
+          addToast({
+            text: '게시글을 수정할 수 없습니다.',
+            bg_color: 'bg-red-100/80',
+            border_color: 'border-red-300/30',
+            text_color: 'text-red-800',
+          });
         });
     } else {
       axios
@@ -125,6 +151,14 @@ const BlogForm = ({ editing, addToast }: Props) => {
 
           // db에 성공적으로 데이터를 보내면 포스트 리스트 페이지로 이동
           router.push('/admin');
+        })
+        .catch((e) => {
+          addToast({
+            text: '게시글을 생성할 수 없습니다.',
+            bg_color: 'bg-red-100/80',
+            border_color: 'border-red-300/30',
+            text_color: 'text-red-800',
+          });
         });
     }
   };
@@ -132,6 +166,14 @@ const BlogForm = ({ editing, addToast }: Props) => {
   const onChangePublish = (e: ChangeEvent<HTMLInputElement>) => {
     setPublish(e.target.checked);
   };
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
 
   return (
     <div className="w-full mx-auto text-gray-600 body-font">
