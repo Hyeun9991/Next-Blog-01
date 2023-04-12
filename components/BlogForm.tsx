@@ -176,13 +176,13 @@ const BlogForm = ({ editing, addToast }: Props) => {
   }
 
   return (
-    <div className="w-full mx-auto text-gray-600 body-font">
+    <div className="w-full mx-auto text-gray-600 body-font p-4 sm:px-8 md:px-10">
       <div className="flex justify-between items-center mb-12">
         <button
-          className="disabled:pointer-events-none w-7 h-7 sm:w-8 sm:h-8 bg-gray-200 hover:bg-black flex items-center justify-center rounded-full transition outline-none focus:ring-4 focus:ring-gray-300"
+          className="disabled:pointer-events-none w-7 h-7 sm:w-8 sm:h-8 bg-gray-200 hover:bg-black flex items-center justify-center rounded-full transition outline-none focus:ring-4 focus:ring-gray-300 dark:bg-zinc-700 dark:hover:bg-zinc-100"
           onClick={goBack}
         >
-          <IoIosArrowBack className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+          <IoIosArrowBack className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white dark:text-gray-500" />
         </button>
         <div className="flex gap-5">
           <div className="flex items-center">
@@ -201,17 +201,17 @@ const BlogForm = ({ editing, addToast }: Props) => {
             </label>
           </div>
           <button
-            className="disabled:pointer-events-none w-7 h-7 sm:w-8 sm:h-8 bg-gray-200 hover:bg-black flex items-center justify-center rounded-full transition outline-none focus:ring-4 focus:ring-gray-300"
+            className="disabled:pointer-events-none w-7 h-7 sm:w-8 sm:h-8 bg-gray-200 hover:bg-black flex items-center justify-center rounded-full transition outline-none focus:ring-4 focus:ring-gray-300 dark:bg-zinc-700 dark:hover:bg-zinc-100"
             onClick={onSubmit}
             disabled={editing && !isEdited()}
           >
             {editing ? (
               <BsCheckLg
                 className="
-                  w-3.5 h-3.5 sm:w-5 sm:h-5 text-white"
+                  w-3.5 h-3.5 sm:w-5 sm:h-5 text-white dark:text-gray-500"
               />
             ) : (
-              <RiSendPlaneFill className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
+              <RiSendPlaneFill className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white dark:text-gray-500" />
             )}
           </button>
         </div>
@@ -223,8 +223,8 @@ const BlogForm = ({ editing, addToast }: Props) => {
         ></label>
         <input
           type="text"
-          className={`bg-gray-50 text-gray-900 text-4xl outline-none focus:border-gray-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500 ${
-            titleError ? 'border-b-4 border-red-600' : ''
+          className={`bg-gray-50 text-gray-900 text-4xl outline-none block w-full dark:bg-zinc-900 dark:placeholder-gray-400 dark:text-white ${
+            titleError ? 'border-b-4 border-red-600 dark:border-red-500' : ''
           }`}
           value={title}
           placeholder="제목을 입력하세요"
@@ -233,7 +233,7 @@ const BlogForm = ({ editing, addToast }: Props) => {
           }}
         />
         {titleError && (
-          <p className="text-red-600 text-sm">제목을 입력하세요.</p>
+          <p className="text-red-600 dark:text-red-500 text-sm">제목을 입력하세요.</p>
         )}
       </div>
       <div className="mb-3">
@@ -242,8 +242,8 @@ const BlogForm = ({ editing, addToast }: Props) => {
           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         ></label>
         <textarea
-          className={`bg-gray-50 text-gray-900 text-md resize-none outline-none	 focus:ring-gray-500 focus:border-gray-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500 ${
-            bodyError ? 'border-b-4 border-red-600' : ''
+          className={`bg-gray-50 text-gray-900 text-md resize-none outline-none	block w-full dark:bg-zinc-900 dark:placeholder-gray-400 dark:text-white ${
+            bodyError ? 'border-b-4 border-red-600 dark:border-red-500' : ''
           }`}
           rows={18}
           value={body}
@@ -253,7 +253,7 @@ const BlogForm = ({ editing, addToast }: Props) => {
           }}
         />
         {bodyError && (
-          <p className="text-red-600 text-sm">내용을 입력하세요.</p>
+          <p className="text-red-600 dark:text-red-500 text-sm">내용을 입력하세요.</p>
         )}
       </div>
     </div>

@@ -9,10 +9,7 @@ const Header = () => {
   return (
     <nav className="fixed z-10 t-0 l-0 w-full px-4 py-2.5 bg-gray-50/60 backdrop-blur-md sm:px-0 sm:py-4 dark:bg-zinc-900/90">
       <div className="sm:w-11/12 flex flex-wrap items-center justify-between mx-auto">
-        <Link
-          href="/"
-          className="text-xl font-semibold whitespace-nowrap"
-        >
+        <Link href="/" className="text-xl font-semibold whitespace-nowrap">
           <Image
             src="/logo.png"
             priority
@@ -24,21 +21,25 @@ const Header = () => {
         </Link>
         <div>
           <ul className="flex items-center gap-6 md:gap-8">
-            <li>
+            {/* <li>
               <Link
                 href="/blogs"
-                className={`text-sm text-gray-500 hover:text-gray-800 dark:text-gray-200 md:dark:hover:text-white  md:dark:hover:bg-transparent ${
-                  router.pathname === '/blogs' ? 'text-gray-900 font-semibold' : ''
+                className={`text-sm text-gray-500 hover:underline dark:text-gray-400 ${
+                  router.pathname === '/blogs'
+                    ? 'font-semibold text-gray-900 dark:text-white'
+                    : ''
                 }`}
               >
                 Blogs
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link
                 href="/admin"
-                className={`text-sm text-gray-500 hover:text-gray-800 dark:text-gray-200 md:dark:hover:text-white  md:dark:hover:bg-transparent ${
-                  router.pathname === '/admin' ? 'text-gray-900 font-semibold' : ''
+                className={`text-sm text-gray-500 hover:underline dark:text-gray-400 ${
+                  router.pathname === '/admin'
+                    ? 'font-semibold text-gray-900 dark:text-white'
+                    : ''
                 }`}
               >
                 Admin

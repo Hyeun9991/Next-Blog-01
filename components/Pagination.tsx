@@ -27,13 +27,13 @@ const Pagination = ({ currentPage, numberOfPages, onClick, limit }: Props) => {
           <li>
             <a
               href="#"
-              className="flex items-center justify-center w-8 h-8 text-gray-500 rounded-full hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+              className="flex items-center justify-center w-8 h-8 text-gray-500 rounded-full hover:bg-gray-100 hover:text-gray-700 dark:bg-zinc-900 dark:text-gray-400 dark:hover:bg-zinc-800"
               onClick={() => onClick(startPage - limit)}
             >
               <span className="sr-only">Previous</span>
               <svg
                 aria-hidden="true"
-                className="w-5 h-5 text-black"
+                className="w-5 h-5 text-black dark:text-white"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -56,9 +56,9 @@ const Pagination = ({ currentPage, numberOfPages, onClick, limit }: Props) => {
             return (
               <li key={pageNumber}>
                 <div
-                  className={`flex items-center justify-center rounded-full w-8 h-8 cursor-pointer text-sm text-black hover:bg-gray-100 hover:text-gray-700 active:bg-black dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
+                  className={`flex items-center justify-center rounded-full w-8 h-8 cursor-pointer text-sm text-black hover:bg-gray-100 hover:text-gray-700 active:bg-black dark:bg-zinc-900 dark:text-gray-400 dark:hover:bg-zinc-800 dark:hover:text-white ${
                     currentPage === pageNumber
-                      ? 'bg-black text-white pointer-events-none'
+                      ? 'bg-black text-white dark:bg-zinc-100 dark:text-gray-900 pointer-events-none'
                       : ''
                   }`}
                   onClick={() => {
@@ -76,13 +76,13 @@ const Pagination = ({ currentPage, numberOfPages, onClick, limit }: Props) => {
           <li>
             <a
               href="#"
-              className="flex items-center justify-center w-8 h-8 text-gray-500 rounded-full hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+              className="flex items-center justify-center w-8 h-8 text-gray-500 rounded-full hover:bg-gray-100 hover:text-gray-700 dark:bg-zinc-900 dark:text-gray-400 dark:hover:bg-zinc-800"
               onClick={() => onClick(startPage + limit)}
             >
               <span className="sr-only">Next</span>
               <svg
                 aria-hidden="true"
-                className="w-5 h-5 text-black"
+                className="w-5 h-5 text-black dark:text-white"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"

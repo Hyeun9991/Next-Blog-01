@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import Hero from '../components/home/hero';
+import Main from '../components/home/main';
 
 const Home: NextPage = () => {
   return (
@@ -12,7 +12,7 @@ const Home: NextPage = () => {
       </Head>
 
       <div className="flex flex-col items-center mx-auto md:w-full md:flex-row">
-        <Hero />
+        <Main />
       </div>
     </>
   );

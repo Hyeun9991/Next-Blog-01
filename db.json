@@ -1,46 +1,53 @@
 {
   "posts": [
     {
-      "title": "안녕하세요!!",
-      "body": "첫 번째 포스트를 작성하게 되었습니다.",
-      "createdAt": 1679990929309,
-      "id": 7,
-      "publish": true
-    },
-    {
-      "title": "테스트 게시글입니다.",
-      "body": "첫 번째 줄\n두 번째 줄\n세 번째 줄\n\n다섯 번째 줄",
-      "createdAt": 1679991051872,
-      "id": 8,
-      "publish": false
-    },
-    {
-      "title": "버튼 비활성화 테스트하는 포스트",
-      "body": "대충 내용 어쩌고 저쩌고 블라면?",
-      "createdAt": 1680080710182,
+      "title": "title 1",
+      "body": "body 1",
       "publish": true,
-      "id": 9
+      "createdAt": 1681301175128,
+      "id": 1
     },
     {
-      "title": "공개 여부 기능 테스트",
-      "body": "테스트 중",
+      "title": "title 2",
+      "body": "body 2",
+      "publish": true,
+      "createdAt": 1681301185439,
+      "id": 2
+    },
+    {
+      "title": "title 3",
+      "body": "body 3",
+      "publish": true,
+      "createdAt": 1681301193337,
+      "id": 3
+    },
+    {
+      "title": "title 4",
+      "body": "body 4",
       "publish": false,
-      "createdAt": 1680145131779,
-      "id": 10
+      "createdAt": 1681301201949,
+      "id": 4
     },
     {
-      "title": "블로그 생성후 admin 페이지로 이동 테스트",
-      "body": "중입니다!",
+      "title": "title 5",
+      "body": "body 5",
       "publish": true,
-      "createdAt": 1680231170495,
-      "id": 11
+      "createdAt": 1681301220101,
+      "id": 5
     },
     {
-      "title": "페이지네이션 기능 구현하기",
-      "body": "아직 구현안했을때 첫 번째 포스트",
+      "title": "title 6",
+      "body": "body 6",
+      "publish": false,
+      "createdAt": 1681301258172,
+      "id": 6
+    },
+    {
+      "title": "title 7",
+      "body": "body 7",
       "publish": true,
-      "createdAt": 1680231578611,
-      "id": 13
+      "createdAt": 1681301264829,
+      "id": 7
     }
   ]
 }

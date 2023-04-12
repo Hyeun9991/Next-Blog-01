@@ -65,13 +65,13 @@ const Admin = () => {
       </Head>
 
       <section>
-        <div className="flex justify-between items-center mb-4">
+        <div className="flex justify-between items-center p-4 sm:px-8 md:px-10">
           <div className="flex items-center gap-4">
-            <h1 className="font-bold text-2xl text-gray-900">Eh</h1>
+            <h1 className="font-bold text-2xl text-gray-900 dark:text-white">Eh</h1>
             {isLogin && (
               <button
                 onClick={logout}
-                className="w-full bg-gray-800/80 text-white bg-primary-600 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-2.5 py-1.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                className="w-full text-gray-500 hover:underline font-medium text-sm text-center dark:text-gray-400"
               >
                 Logout
               </button>
@@ -80,9 +80,9 @@ const Admin = () => {
           <div>
             <Link
               href="/blogs/create"
-              className="w-7 h-7 sm:w-8 sm:h-8 bg-black flex items-center justify-center rounded-full transition outline-none focus:ring-4 focus:ring-gray-300"
+              className="w-7 h-7 sm:w-8 sm:h-8 bg-black flex items-center justify-center rounded-full transition outline-none focus:ring-4 focus:ring-gray-300 dark:bg-zinc-100"
             >
-              <HiPlusSm className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
+              <HiPlusSm className="w-6 h-6 sm:w-7 sm:h-7 text-white dark:text-black" />
             </Link>
           </div>
         </div>

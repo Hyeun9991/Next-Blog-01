@@ -15,10 +15,10 @@ const DarkModeToggleButton = () => {
         onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
       >
         {/* 라이트 모드 */}
-        <BsFillSunFill className="invisible dark:visible dark:w-full dark:h-full w-0 h-0 text-gray-200" />
+        <BsFillSunFill className="invisible dark:visible dark:w-full dark:h-full w-0 h-0 text-gray-400 hover:text-white" />
 
         {/* 다크 모드 */}
-        <MdDarkMode className="visible dark:invisible dark:w-0 dark:h-0 w-full h-full text-gray-800" />
+        <MdDarkMode className="visible dark:invisible dark:w-0 dark:h-0 w-full h-full text-gray-500/80 hover:text-black" />
       </button>
     </>
   );

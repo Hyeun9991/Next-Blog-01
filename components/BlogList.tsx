@@ -15,13 +15,13 @@ import Toast from './Toast';
 import { HiTrash } from 'react-icons/hi';
 import useToast from '../hooks/toast';
 
-interface IParams {
+export interface IParams {
   _page: number;
   _limit: number;
   _sort: string;
   _order: string;
   publish?: boolean;
-  title_like: string;
+  title_like?: string;
 }
 
 interface IPostData {
@@ -163,21 +163,25 @@ const BlogList = ({ isAdmin }: Props) => {
   const renderBlogList = () => {
     return posts.map((post) => {
       return (
-        <Card
+        <div
+          className="flex flex-col w-full px-4 sm:px-8 md:px-10"
           key={post.id}
-          title={post.title}
-          body={post.body}
-          onClick={() => router.push(`/blogs/${post.id}`)}
         >
-          {isAdmin ? (
-            <button
-              className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-gray-200 hover:bg-gray-900 transition outline-none focus:ring-4 focus:ring-gray-300"
-              onClick={(e) => deleteBlog(e, post.id)}
-            >
-              <HiTrash className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-            </button>
-          ) : undefined}
-        </Card>
+          <Card
+            title={post.title}
+            body={post.body}
+            onClick={() => router.push(`/blogs/${post.id}`)}
+          >
+            {isAdmin ? (
+              <button
+                className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-gray-200 hover:bg-gray-900 transition outline-none focus:ring-4 focus:ring-gray-300 dark:bg-zinc-700 dark:hover:bg-zinc-100"
+                onClick={(e) => deleteBlog(e, post.id)}
+              >
+                <HiTrash className="w-4 h-4 sm:w-5 sm:h-5 text-white dark:text-gray-500" />
+              </button>
+            ) : undefined}
+          </Card>
+        </div>
       );
     });
   };
@@ -194,14 +198,24 @@ const BlogList = ({ isAdmin }: Props) => {
   };
 
   if (error) {
-    return <div>{error}</div>;
+    return (
+      <h1 className="font-bold text-black dark:text-white p-4 sm:px-8 md:px-10">
+        {error}
+      </h1>
+    );
   }
 
   // 포스트 데이터를 화면에 출력
   return (
-    <div className="flex flex-col items-center">
+    <>
       <Toast toasts={toasts} deleteToast={deleteToast} />
-      <form className="flex items-center gap-2 w-full mt-4 mb-4">
+      <form
+        className={
+          isAdmin === true
+            ? `flex items-center gap-2 w-full mt-4 mb-4 p-4 sm:px-8 md:px-10`
+            : 'flex items-center gap-2 w-full p-4 sm:px-8 md:px-10'
+        }
+      >
         <label htmlFor="simple-search" className="sr-only">
           Search
         </label>
@@ -209,7 +223,7 @@ const BlogList = ({ isAdmin }: Props) => {
           <input
             type="text"
             id="simple-search"
-            className="bg-gray-50 text-gray-900 text-sm border-b block w-full p-1.5 outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-white dark:focus:border-white"
+            className="bg-gray-50 text-gray-900 text-sm border-b block w-full p-1.5 outline-none dark:bg-zinc-900 dark:border-zinc-800 dark:placeholder-gray-500 dark:text-white dark:focus:ring-white"
             placeholder="검색"
             required
             value={searchText}
@@ -224,7 +238,7 @@ const BlogList = ({ isAdmin }: Props) => {
       {posts.length === 0 ? (
         <p className="text-sm mt-14 font-bold">작성된 게시글이 없습니다.</p>
       ) : (
-        <>
+        <div className="flex flex-col items-center w-full mb-20">
           {renderBlogList()}
           {numberOfPages > 1 && (
             // numberOfPages가 1보다 작으면 화면에 출력 안함
@@ -234,9 +248,9 @@ const BlogList = ({ isAdmin }: Props) => {
               onClick={onClickPageButton}
             />
           )}
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 };
 

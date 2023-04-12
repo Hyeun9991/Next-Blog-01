@@ -3,8 +3,8 @@ import Link from 'next/link';
 
 const Footer = () => {
   return (
-    <footer className="text-gray-600 body-font">
-      <div className="bg-gray-100/80">
+    <footer className="text-gray-600 dark:text-gray-400">
+      <div className="bg-gray-50 dark:bg-zinc-900">
         <div className="sm:w-11/12 py-6 mx-auto flex items-center sm:flex-row flex-col">
           <Link
             href="/"
@@ -12,12 +12,12 @@ const Footer = () => {
           >
             <Image src="/logo.png" priority width={32} height={32} alt="logo image" />
           </Link>
-          <p className="text-sm text-gray-500 sm:ml-6 sm:mt-0 mt-4">
+          <p className="text-sm text-gray-500 sm:ml-6 sm:mt-0 mt-4 dark:text-gray-400">
             © 2020 Tailblocks —
             <a
               href="https://twitter.com/knyttneve"
               rel="noopener noreferrer"
-              className="text-gray-600 ml-1"
+              className="text-gray-600 ml-1 dark:text-gray-500"
               target="_blank"
             >
               @knyttneve
